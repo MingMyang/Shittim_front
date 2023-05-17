@@ -1,3 +1,13 @@
-:root {
+@font-face {
+    font-family: 'BlueArchive';
+    src: url('../public/font/TTF/경기천년제목_Medium.ttf');
+}
 
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    color: white;
+    font-family: 'BlueArchive';
+    font-weight: bold;
 }

@@ -8,7 +8,7 @@ function useCalcDate(getStart:number, getEnd:number) {
     const endDateString:string = `${endDate.getFullYear()} / ${endDate.getMonth() + 1} / ${endDate.getDate()} ${endDate.getHours()}:${endDate.getMinutes() < 10 ? '0' + endDate.getMinutes() : endDate.getMinutes()}`;
     const duration:string = `진행기간: ${startDateString} ~ ${endDateString}`;
 
-    const [timeLeft, setTimeLeft] = useState({duration: '', remainingTime: ''});
+    const [timeLeft, setTimeLeft] = useState({duration: 'Loading...', remainingTime: 'Loading...'});
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -22,7 +22,13 @@ function useCalcDate(getStart:number, getEnd:number) {
 
     function calcTimeLeft() {
         let currentTime = new Date();
-        const timeDiff = Math.floor((endDate.getTime() - currentTime.getTime()) / 1000);
+        let timeDiff;
+
+        if(currentTime < startDate){
+            timeDiff = Math.floor((startDate.getTime() - currentTime.getTime()) / 1000);
+        } else{
+            timeDiff = Math.floor((endDate.getTime() - currentTime.getTime()) / 1000);
+        }
 
         if (timeDiff > 0) {
             const days = Math.floor(timeDiff / (60 * 60 * 24));
@@ -31,15 +37,43 @@ function useCalcDate(getStart:number, getEnd:number) {
             const seconds = Math.floor(timeDiff % 60);
 
             if (currentTime < startDate) {
-                const remainingTime:any = `시작까지: ${days}일 ${hours}시간 ${minutes}분 ${seconds}초`;
-                return {duration, remainingTime};
+                if(days >= 1){
+                    const remainingTime:any = `시작까지: ${days}일 ${hours}시간`;
+                    return {duration, remainingTime};
+                }
+                else if(hours >= 1){
+                    const remainingTime:any = `시작까지: ${hours}시간 ${minutes}분`;
+                    return {duration, remainingTime};
+                }
+                else if(minutes >= 1){
+                    const remainingTime:any = `시작까지: ${minutes}분 ${seconds}초`;
+                    return {duration, remainingTime};
+                }
+                else{
+                    const remainingTime:any = `시작까지: ${seconds}초`;
+                    return {duration, remainingTime};
+                }
             } else {
-                const remainingTime:any = `종료까지: ${days}일 ${hours}시간 ${minutes}분 ${seconds}초`;
-                return {duration, remainingTime};
+                if(days >= 1){
+                    const remainingTime:any = `종료까지: ${days}일 ${hours}시간`;
+                    return {duration, remainingTime};
+                }
+                else if(hours >= 1){
+                    const remainingTime:any = `종료까지: ${hours}시간 ${minutes}분`;
+                    return {duration, remainingTime};
+                }
+                else if(minutes >= 1){
+                    const remainingTime:any = `종료까지: ${minutes}분 ${seconds}초`;
+                    return {duration, remainingTime};
+                }
+                else{
+                    const remainingTime:any = `종료까지: ${seconds}초`;
+                    return {duration, remainingTime};
+                }
             }
         }
         else{
-            return {duration: duration, remainingTime: '종료되었습니다.'}
+            return {duration: duration, remainingTime: '종료'}
         }
     }
     return timeLeft;

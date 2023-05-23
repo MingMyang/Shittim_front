@@ -1,33 +1,30 @@
-import eventInfo from '../../asset/json/currentEvent.json';
-import stdList from '../../asset/json/studentInfo.json';
-import useCalcDate from '../../asset/hooks/useCalcDate';
-import usePickupStd from '../../asset/hooks/usePickupStd';
-
+/** @jsxImportSource @emotion/react */
+import * as S from "./style"
 import CurrentEvent from './currentEvent/currentEvent';
 import CurrentPickup from './currentPickup/currentPickup';
 import CurrentRaid from './currentRaid/currentRaid';
+import CurrentTest from './currentTest/currentTest';
+import CurrentCampain from "./currentCampain/currentCampain";
+import CurrentBirthday from './currentBirthday/currentBirthday';
+import { TwitterTimelineEmbed } from 'react-twitter-embed';
 
 
 function main() {
-    //현재 진행중인 event 항목 추출
-    const event = JSON.parse(JSON.stringify(eventInfo));
-    const std = JSON.parse(JSON.stringify(stdList));
-
-    const currentEventName = event.events[event.current_events.event];
-    const currentRaidName = event.raids[event.current_raid.raid];
-    const currentRaidTerrain = event.current_raid.terrain;
-
-    const eventDate: any = useCalcDate(event.current_events.start, event.current_events.end);
-    const pickupDate: any = useCalcDate(event.current_gacha.start, event.current_gacha.end);
-    const raidDate: any = useCalcDate(event.current_raid.start, event.current_raid.end);
-
-    const resultPickup: any = usePickupStd(std, event.current_gacha.characters);
-
     return (
-        <div>
-            <CurrentEvent />
-            <CurrentPickup />
-            <CurrentRaid />
+        <div css={S.Positioner}>
+            <div css={S.EventArea}>
+                <div css={S.GridTitle}>Event List (Global)</div>
+                <CurrentEvent />
+                <CurrentPickup />
+                <CurrentRaid />
+                <CurrentTest />
+                <CurrentCampain />
+                <CurrentBirthday />
+                <div css={S.TwitterTitle}>Twitter (KR)</div>
+                <div css={S.TwittArea}>
+                    <TwitterTimelineEmbed sourceType="profile" screenName="KR_BlueArchive" />
+                </div>
+            </div>
         </div>
     );
 }

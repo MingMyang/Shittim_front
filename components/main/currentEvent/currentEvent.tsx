@@ -1,17 +1,23 @@
+/** @jsxImportSource @emotion/react */
+import * as S from "./style"
+
 import eventInfo from '@/asset/json/currentEvent.json';
 import useCalcDate from '@/asset/hooks/useCalcDate';
 
 function currentEvent() {
     const event = JSON.parse(JSON.stringify(eventInfo));
-    const currentEventName = event.events[event.current_events.event];
+    const eventNo = eventInfo.current_events.event;
+    const currentEventName = event.events[eventNo];
     const eventDate: any = useCalcDate(event.current_events.start, event.current_events.end);
-    return(
-        <div>
-            <h3>진행 중인 이벤트: {currentEventName}</h3>
+
+    return (
+        <div css={S.Positioner}>
+            <div css={S.BannerTitle}>메인 이벤트</div>
             <div>
-                <p>{eventDate.duration}</p>
-                <p>{eventDate.remainingTime}</p>
+                <img css ={S.EventLogo} alt='' src={'images/eventlogo/Event_' + eventNo + '_Kr.png'} />
+                <img css={S.EventBG} alt='' src={'images/campaign/Campaign_Event_' + eventNo + '_Normal.png'} />
             </div>
+            <div css={S.EventName}>{currentEventName} (이벤트 {eventDate.remainingTime})</div>
         </div>
     )
 }

@@ -1,32 +1,36 @@
+/** @jsxImportSource @emotion/react */
+import * as S from "./style"
+
 import eventInfo from '@/asset/json/currentEvent.json';
-import stdList from '@/asset/json/studentInfo.json';
 import useCalcDate from '@/asset/hooks/useCalcDate';
-import usePickupStd from '@/asset/hooks/usePickupStd';
 
 function currentPickup() {
-    const event = JSON.parse(JSON.stringify(eventInfo));
-    const pickupDate: any = useCalcDate(event.current_gacha.start, event.current_gacha.end);
 
-    const std = JSON.parse(JSON.stringify(stdList));
-    const resultPickup: any = usePickupStd(std, event.current_gacha.characters);
+  const pickupDate: any = useCalcDate(eventInfo.current_gacha.start, eventInfo.current_gacha.end);
 
-    return (
-        <div>
-            <h3>픽업 일정</h3>
-            <div>
-                <p>{pickupDate.duration}</p>
-                <p>{pickupDate.remainingTime}</p>
-            </div>
-            <div>
-                {resultPickup.map((result: any) => (
-                    <div key={result.id}>
-                        <div><img alt='' src={'images/student/collection/' + result.src + '.webp'} /></div>
-                        <div>{result.name}</div>
-                    </div>
-                ))}
-            </div>
-        </div>
-    )
+  const pickupstd = [];
+
+  for (let i = 0; i < eventInfo.current_gacha.banner.length; i++) {
+    pickupstd[i] = {
+      id: i,
+      pathCode: eventInfo.current_gacha.banner[i],
+    }
+  }
+
+  return (
+    <div css={S.Positioner}>
+      <div css={S.BannerTitle}>픽업 배너</div>
+      <div css={S.remainTime}>픽업 {pickupDate.remainingTime}</div>
+      <div css={S.PickupList}>
+        {pickupstd.map((result: any) => (
+          <div css={S.ListItem} key={result.id}>
+            <img css={S.ItemImg} alt='' src={'images/pickupbanner/Banner_' + result.pathCode + '.webp'} />
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+
 }
 
 export default currentPickup;

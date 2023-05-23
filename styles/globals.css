@@ -7,7 +7,30 @@
     padding: 0px;
     margin: 0px;
     box-sizing: border-box;
-    color: white;
+    transition: color 0.2s;
+    transition: background-color 0.2s;
+}
+
+:root{
+    color: black;
     font-family: 'BlueArchive';
     font-weight: bold;
+}
+[data-theme="light"]{
+    color: black;
+    --base-color: black;
+    --theme-color: rgba(40, 40, 40, 0.75);
+    --nav-select-color: rgba(255, 255, 255, 0.75);
+    --bg-color: rgba(255, 255, 255, 0.5);
+    --grid-box-color:  rgba(225, 225, 225, 0.5);
+    --grid-text-color: rgba(255, 255, 255, 1);
+}
+[data-theme="dark"]{
+    color: white;
+    --base-color: white;
+    --theme-color: rgba(240, 240, 240, 0.5);
+    --nav-select-color: rgba(50, 50, 50, 0.75);
+    --bg-color: rgba(50, 50, 50, 0.5);
+    --grid-box-color:  rgba(33, 33, 33, 0.5);
+    --grid-text-color: rgba(50, 50, 50, 0.9);
 }

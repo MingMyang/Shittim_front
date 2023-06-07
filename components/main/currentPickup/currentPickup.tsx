@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import * as S from "./style"
-
+import Link from "next/link";
 import eventInfo from '@/asset/json/currentEvent.json';
 import useCalcDate from '@/asset/hooks/useCalcDate';
 
@@ -13,6 +13,7 @@ function currentPickup() {
   for (let i = 0; i < eventInfo.current_gacha.banner.length; i++) {
     pickupstd[i] = {
       id: i,
+      pickUp: eventInfo.current_gacha.pickup[i],
       pathCode: eventInfo.current_gacha.banner[i],
     }
   }
@@ -24,11 +25,13 @@ function currentPickup() {
       <div css={S.PickupList}>
         {pickupstd.map((result: any) => (
           <div css={S.ListItem} key={result.id}>
-            <img css={S.ItemImg} alt='' src={'images/pickupbanner/Banner_' + result.pathCode + '.webp'} />
+            <Link href={'/stdList/' + result.pickUp}>
+              <img css={S.ItemImg} alt='' src={'images/pickupbanner/Banner_' + result.pathCode + '.webp'} />
+            </Link>
           </div>
         ))}
       </div>
-    </div>
+    </div >
   )
 
 }

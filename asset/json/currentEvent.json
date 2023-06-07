@@ -38,19 +38,20 @@
     "bounty_max": 9, 
     "schooldungeon_max": 4,
     "current_gacha": {
-        "banner": ["35A", "35A", "35A", "35A", "35A", "35A", "35A", "35A"], 
-        "start": 1684202400, 
-        "end": 1685412000
+        "banner": ["50A", "50B", "50C"], 
+        "pickup": ["Aris", "Yuzu", "Midori"],
+        "start": 1686016800, 
+        "end": 1686596400
     },
     "current_events":{
-        "event": 800, 
+        "event": 808, 
         "start": 1684202400, 
         "end": 1685386800
     }, 
     "current_raid": {
-        "raid": 1, 
-        "terrain": "시가지", 
-        "start": 1684807200, 
-        "end": 1685386800
+        "raid": 2, 
+        "terrain": "실내전", 
+        "start": 1686016800, 
+        "end": 1686596400
     }
 }

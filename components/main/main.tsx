@@ -13,7 +13,7 @@ function main() {
     return (
         <div css={S.Positioner}>
             <div css={S.EventArea}>
-                <div css={S.GridTitle}>Event List (Global)</div>
+                <div css={S.GridTitle}>이벤트 차트 (Global)</div>
                 <CurrentEvent />
                 <CurrentPickup />
                 <CurrentRaid />

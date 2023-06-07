@@ -33,16 +33,16 @@ function header() {
                 <div css={S.FullLogo} onClick={() => router.push("/")}>
                     <div css={S.Icon}>
                         <img css={S.LogoImg} alt='' src='/images/schoolicon/School_Icon_MILLENNIUM_W.png' />
-                        <div css={S.IconText}>- VERITAS -</div>
+                        <div css={S.IconText}>- ARONA -</div>
                     </div>
-                    <div css={S.LogoText}><span css={S.FirstText}>MILLENNIUM</span><span css={S.SecondText}>DataBase</span></div>
+                    <div css={S.LogoText}><span css={S.FirstText}>Schale</span><span css={S.SecondText}>DataBase</span></div>
                 </div>
                 <div css={S.뭐로하지}>
                     <div css={S.NavItems}>
                         <div onClick={() => router.push("/")}>홈</div>
                         <div onClick={() => router.push("/stdList")}>학생</div>
                         <div>아이템</div>
-                        <div>업무</div>
+                        <div>계산기</div>
                     </div>
                     <div></div>
                 </div>

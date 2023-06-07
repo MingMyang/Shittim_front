@@ -12,7 +12,7 @@ export const Positioner = css`
 `
 
 export const Navigation = css`
-    width: 1500px;
+    width: 1400px;
     height: 100%;
     display: flex;
     flex-direction: row;
@@ -39,6 +39,7 @@ export const LogoImg = css`
     left: 50%;
     top: -15%;
     transform: translate(-50%, -0%);
+    filter: var(--icon-color)
 `
 
 export const IconText = css`

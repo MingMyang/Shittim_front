@@ -7,10 +7,11 @@ import localization from '@/asset/json/localization.json';
 function stdDetail(props: any) {
     //props 데이터 불러오기
     const currentStudent = props.crrentData;
+    const localizationData: any = localization;
 
     //번역 기능
     function translate(types: any, word: any) {
-        const translatedWord = localization[types][word];
+        let translatedWord = localizationData[types][word];
         return translatedWord ? translatedWord : word;
     }
 

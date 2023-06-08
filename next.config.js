@@ -1,9 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  eactStrictMode: true,
 }
 
-module.exports = {
-  nextConfig,
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/[hash]' : '',
-};
+mmodule.exports = nextConfig

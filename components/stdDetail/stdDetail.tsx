@@ -15,6 +15,35 @@ function stdDetail(props: any) {
         return translatedWord ? translatedWord : word;
     }
 
+    //레벨 조정
+    const [level, setLevel] = useState(1);
+    const handleChange = (event: any) => {
+        setLevel(event.target.value);
+    };
+    let levelscale: number = parseFloat(((level - 1) / 99).toFixed(4))
+
+    //1~5성급별 성장치
+    let transcendence: any = []
+    if (transcendence.length == 0) {
+        transcendence = [[0, 1000, 1200, 1400, 1700], [0, 500, 700, 900, 1400], [0, 750, 1000, 1200, 1500]]
+    }
+
+    let transcendenceAttack: number = 1
+    let transcendenceHP: number = 1
+    let transcendenceHeal: number = 1
+
+    for (let i = 0; i < 5; i++) {
+        transcendenceAttack += transcendence[0][i] / 10000
+        transcendenceHP += transcendence[1][i] / 10000
+        transcendenceHeal += transcendence[2][i] / 10000
+    }
+
+    //스테이터스 계산식(성급 + 레벨)
+    let MaxHP: number = Math.ceil(parseFloat((Math.round((currentStudent?.MaxHP1 + (currentStudent?.MaxHP100 - currentStudent?.MaxHP1) * levelscale).toFixed(4)) * transcendenceHP).toFixed(4)))
+    let AttackPower: number = Math.ceil(parseFloat((Math.round((currentStudent?.AttackPower1 + (currentStudent?.AttackPower100 - currentStudent?.AttackPower1) * levelscale).toFixed(4)) * transcendenceAttack).toFixed(4)))
+    let DefensePower: number = Math.round((currentStudent?.DefensePower1 + (currentStudent?.DefensePower100 - currentStudent?.DefensePower1) * levelscale).toFixed(4))
+    let HealPower: number = Math.ceil(parseFloat((Math.round((currentStudent?.HealPower1 + (currentStudent?.HealPower100 - currentStudent?.HealPower1) * levelscale).toFixed(4)) * transcendenceHeal).toFixed(4)))
+
     //텍스트 컬러조정
     let TypeColor;
     if (currentStudent?.SquadType === "Main") {
@@ -68,34 +97,8 @@ function stdDetail(props: any) {
         `
     }
 
-    //레벨 조정
-    const [level, setLevel] = useState(1);
-    const handleChange = (event: any) => {
-        setLevel(event.target.value);
-    };
-    let levelscale: number = parseFloat(((level - 1) / 99).toFixed(4))
-
-    //1~5성급별 성장치
-    let transcendence: any = []
-    if (transcendence.length == 0) {
-        transcendence = [[0, 1000, 1200, 1400, 1700], [0, 500, 700, 900, 1400], [0, 750, 1000, 1200, 1500]]
-    }
-
-    let transcendenceAttack: number = 1
-    let transcendenceHP: number = 1
-    let transcendenceHeal: number = 1
-
-    for (let i = 0; i < 5; i++) {
-        transcendenceAttack += transcendence[0][i] / 10000
-        transcendenceHP += transcendence[1][i] / 10000
-        transcendenceHeal += transcendence[2][i] / 10000
-    }
-
-    //스테이터스 계산식(성급 + 레벨)
-    let MaxHP: number = Math.ceil(parseFloat((Math.round((currentStudent?.MaxHP1 + (currentStudent?.MaxHP100 - currentStudent?.MaxHP1) * levelscale).toFixed(4)) * transcendenceHP).toFixed(4)))
-    let AttackPower: number = Math.ceil(parseFloat((Math.round((currentStudent?.AttackPower1 + (currentStudent?.AttackPower100 - currentStudent?.AttackPower1) * levelscale).toFixed(4)) * transcendenceAttack).toFixed(4)))
-    let DefensePower: number = Math.round((currentStudent?.DefensePower1 + (currentStudent?.DefensePower100 - currentStudent?.DefensePower1) * levelscale).toFixed(4))
-    let HealPower: number = Math.ceil(parseFloat((Math.round((currentStudent?.HealPower1 + (currentStudent?.HealPower100 - currentStudent?.HealPower1) * levelscale).toFixed(4)) * transcendenceHeal).toFixed(4)))
+    //PathName 정의
+    const PathSchool = currentStudent?.School.toUpperCase();
 
     return (
         <div css={S.Positioner}>
@@ -103,7 +106,7 @@ function stdDetail(props: any) {
                 <div css={S.InfoArea}>
                     <div>
                         <div css={S.SummaryProfile}>
-                            <img css={S.SchoolImg} alt='' src={'/images/schoolicon/School_Icon_' + currentStudent?.School + '_W.png'} />
+                            <img css={S.SchoolImg} alt='' src={'/images/schoolicon/School_Icon_' + PathSchool + '_W.png'} />
                             <div css={S.Belong}>
                                 <div css={S.BelongSchool}>{translate("SchoolLong", currentStudent?.School)} {currentStudent?.SchoolYear}</div>
                                 <div css={S.BelongClub}>{translate("Club", currentStudent?.Club)}</div>

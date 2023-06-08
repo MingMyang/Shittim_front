@@ -13,11 +13,11 @@ export const Positioner = css`
 
 export const MainArea = css`
     width: 1300px;
-    height: calc(100% - 100px);
+    height: 800px;
     padding: 60px 90px 60px 90px;
-    margin: 50px;
     border-radius: 5px;
     background-color: var(--bg-color);
+    overflow: hidden;
 
     display: flex;
     flex-direction: row;

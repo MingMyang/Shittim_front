@@ -3,4 +3,4 @@ const nextConfig = {
   eactStrictMode: true,
 }
 
-mmodule.exports = nextConfig
+module.exports = nextConfig

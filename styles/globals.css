@@ -21,10 +21,10 @@
     --base-color: black;
     --icon-color: invert(1);
     --theme-color: rgba(40, 40, 40, 0.75);
-    --nav-select-color: rgba(255, 255, 255, 0.75);
-    --bg-color: rgba(255, 255, 255, 0.7);
-    --grid-box-color:  rgba(225, 225, 225, 0.7);
-    --grid-text-color: rgba(255, 255, 255, 1);
+    --nav-select-color: rgba(250, 250, 250, 0.75);
+    --bg-color: rgba(225, 225, 225, 0.6);
+    --grid-box-color:  rgba(250, 250, 250, 0.3);
+    --grid-text-color: rgba(250, 250, 250, 1);
 }
 [data-theme="dark"]{
     color: white;

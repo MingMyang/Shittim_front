@@ -5,6 +5,7 @@ export const Positioner = css`
     height: 65px;
     padding: 0vh 10vw 0vh 10vw;
     background-color: var(--bg-color);
+    backdrop-filter: blur(7.5px);
 
     display: flex;
     justify-content: center;
@@ -97,7 +98,7 @@ export const NavItems = css`
         justify-content: center;
         align-items: center;
         :hover{
-            background-color: var(--bg-color);
+            background-color: var(--nav-select-color);
         }
     }
 `

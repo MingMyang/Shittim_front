@@ -17,6 +17,7 @@ export const EventArea = css`
     padding: 1.5vh 1.5vw 7.5vh 1.5vw;
     border-radius: 5px;
     background-color: var(--bg-color);
+    backdrop-filter: blur(5px);
 
     display: grid;
     grid-template-columns: 3fr 3fr 4fr 400px;

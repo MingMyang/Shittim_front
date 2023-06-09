@@ -34,7 +34,7 @@ function main() {
                 <div css={S.StdList}>
                     {filteredStudents.map((result: any) => (
                         <div css={S.ListItem} key={result.id} onClick={() => handleStudentClick(result)}>
-                            <img alt='' src={'images/student/icon/' + result.CollectionTexture + '.png'} />
+                            <img alt='' loading='lazy' src={'images/student/icon/' + result.CollectionTexture + '.png'} />
                             <div css={S.StdName}>{result.Name}</div>
                         </div>
                     ))}

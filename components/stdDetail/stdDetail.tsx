@@ -44,7 +44,7 @@ function stdDetail(props: any) {
     let DefensePower: number = Math.round((currentStudent?.DefensePower1 + (currentStudent?.DefensePower100 - currentStudent?.DefensePower1) * levelscale).toFixed(4))
     let HealPower: number = Math.ceil(parseFloat((Math.round((currentStudent?.HealPower1 + (currentStudent?.HealPower100 - currentStudent?.HealPower1) * levelscale).toFixed(4)) * transcendenceHeal).toFixed(4)))
 
-    //텍스트 컬러조정
+    //팀업타입 컬러조정
     let TypeColor;
     if (currentStudent?.SquadType === "Main") {
         TypeColor = css`
@@ -57,43 +57,50 @@ function stdDetail(props: any) {
         `
     }
 
-    //텍스트 컬러조정
-    let AtkColor;
+    //공방타입 컬러조정
+    let TypeAtk;
     if (currentStudent?.BulletType === "Explosion") {
-        AtkColor = css`
-            color: red;
+        TypeAtk = css`
+            ${S.TypeBox};
+            background-color: #851914;
         `
     }
     else if (currentStudent?.BulletType === "Pierce") {
-        AtkColor = css`
-            color: Orange;
+        TypeAtk = css`
+            ${S.TypeBox};
+            background-color: #B68A2E;
         `
     }
     else {
-        AtkColor = css`
-            color: Blue;
+        TypeAtk = css`
+            ${S.TypeBox};
+            background-color: #396D99;
         `
     }
 
-    let DefColor;
+    let TypeDef;
     if (currentStudent?.ArmorType === "LightArmor") {
-        DefColor = css`
-            color: red;
+        TypeDef = css`
+            ${S.TypeBox};
+            background-color: #851914;
         `
     }
     else if (currentStudent?.ArmorType === "HeavyArmor") {
-        DefColor = css`
-            color: Orange;
+        TypeDef = css`
+            ${S.TypeBox};
+            background-color: #B68A2E;
         `
     }
     else if (currentStudent?.ArmorType === "Unarmed") {
-        DefColor = css`
-            color: Blue;
+        TypeDef = css`
+            ${S.TypeBox};
+            background-color: #396D99;
         `
     }
     else {
-        DefColor = css`
-            color: purple;
+        TypeDef = css`
+            ${S.TypeBox};
+            background-color: #9A45A8;
         `
     }
 
@@ -104,44 +111,50 @@ function stdDetail(props: any) {
         <div css={S.Positioner}>
             <div css={S.MainArea}>
                 <div css={S.InfoArea}>
-                    <div>
-                        <div css={S.SummaryProfile}>
+                    <div css={S.SummaryProfile}>
+                        <div css={S.Belong}>
                             <img css={S.SchoolImg} alt='' src={'/images/schoolicon/School_Icon_' + PathSchool + '_W.png'} />
-                            <div css={S.Belong}>
+                            <div css={S.BelongInfo}>
                                 <div css={S.BelongSchool}>{translate("SchoolLong", currentStudent?.School)} {currentStudent?.SchoolYear}</div>
                                 <div css={S.BelongClub}>{translate("Club", currentStudent?.Club)}</div>
                             </div>
                         </div>
-                        <div css={S.DetailInfo}>
-                            <div css={TypeColor}>{translate("SquadType", currentStudent?.SquadType)}</div>
-                            <h1>{currentStudent?.Name}</h1>
-                            <br />
-                            <h3>역할: {translate("TacticRole", currentStudent?.TacticRole)}</h3>
-                            <h3>포지션: {currentStudent?.Position}</h3>
-                            <h3>공격타입: <span css={AtkColor}>{translate("BulletType", currentStudent?.BulletType)}</span></h3>
-                            <h3>방어타입: <span css={DefColor}>{translate("ArmorType", currentStudent?.ArmorType)}</span></h3>
-                            <br />
-                            <br />
-                            <br />
-                            <h2>스테이터스(5성 기준, 장비 제외)</h2>
-                            <div css={S.AdjustStat}>
-                                <input css={S.StatScale} type="range" min="1" max="85" value={level} onChange={handleChange} />
-                                <span> Lv. {level}</span>
+                        <div css={S.TypeContainer}>
+                            <div css={S.NameInfo}>
+                                <div css={TypeColor}>{translate("SquadType", currentStudent?.SquadType)}</div>
+                                <h1>{currentStudent?.Name}</h1>
                             </div>
-                            <br />
-                            <h3>최대체력: {MaxHP} </h3>
-                            <h3>공격력: {AttackPower}</h3>
-                            <h3>방어력: {DefensePower}</h3>
-                            <h3>치유력: {HealPower}</h3>
-                            <h3>명중 수치: {currentStudent?.AccuracyPoint}</h3>
-                            <h3>회피 수치: {currentStudent?.DodgePoint}</h3>
-                            <h3>치명 수치: {currentStudent?.CriticalPoint}</h3>
-                            <h3>치명 대미지: {currentStudent?.CriticalDamageRate / 100}%</h3>
-                            <h3>안정 수치: {currentStudent?.StabilityPoint}</h3>
-                            <h3>사거리: {currentStudent?.Range}</h3>
-                            <h3>장탄 수: {currentStudent?.AmmoCount}</h3>
-                            <h3>소모 탄약: 공격당 {currentStudent?.AmmoCost}발</h3>
+                            <div css={S.TypeInfo}>
+                                <div css={S.TypeBox}><div><img css={S.TacticRoleImg}alt='' src={'/images/ui/Role_' + currentStudent?.TacticRole + '.png'} /></div> {translate("TacticRole", currentStudent?.TacticRole)}</div>
+                                <div css={TypeAtk}><div css={S.TypeImgContainer}><img alt='' src='/images/ui/Type_Attack_s.png' /></div> <div css={S.TypeTextContainer}>{translate("BulletType", currentStudent?.BulletType)}</div></div>
+                                <div css={S.TypeBox}>{currentStudent?.Position}</div>
+                                <div css={TypeDef}><div css={S.TypeImgContainer}><img alt='' src='/images/ui/Type_Defense_s.png' /></div> <div css={S.TypeTextContainer}>{translate("ArmorType", currentStudent?.ArmorType)}</div></div>
+                            </div>
                         </div>
+                    </div>
+
+                    <div css={S.DetailInfo}>
+                        <br />
+                        <br />
+                        <br />
+                        <h2>스테이터스(5성 기준, 장비 제외)</h2>
+                        <div css={S.AdjustStat}>
+                            <input css={S.StatScale} type="range" min="1" max="85" value={level} onChange={handleChange} />
+                            <span> Lv. {level}</span>
+                        </div>
+                        <br />
+                        <h3>최대체력: {MaxHP} </h3>
+                        <h3>공격력: {AttackPower}</h3>
+                        <h3>방어력: {DefensePower}</h3>
+                        <h3>치유력: {HealPower}</h3>
+                        <h3>명중 수치: {currentStudent?.AccuracyPoint}</h3>
+                        <h3>회피 수치: {currentStudent?.DodgePoint}</h3>
+                        <h3>치명 수치: {currentStudent?.CriticalPoint}</h3>
+                        <h3>치명 대미지: {currentStudent?.CriticalDamageRate / 100}%</h3>
+                        <h3>안정 수치: {currentStudent?.StabilityPoint}</h3>
+                        <h3>사거리: {currentStudent?.Range}</h3>
+                        <h3>장탄 수: {currentStudent?.AmmoCount}</h3>
+                        <h3>소모 탄약: 공격당 {currentStudent?.AmmoCost}발</h3>
                     </div>
                 </div>
                 <div css={S.StdentArea}>

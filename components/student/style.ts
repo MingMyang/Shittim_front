@@ -12,8 +12,8 @@ export const Positioner = css`
 `
 
 export const MainArea = css`
-    width: 1500px;
-    height: 800px;
+    width: 100%;
+    height: 90%;
     padding: 2.5vh 1.5vw 2.5vh 1.5vw;
     border-radius: 5px;
     background-color: var(--bg-color);
@@ -50,7 +50,7 @@ export const Filter = css`
 
 export const StdList = css`
     width: 100%;
-    height: calc(700px - 2.5vh);
+    height: calc(100% - 2.5vh);
 
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));

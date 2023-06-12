@@ -38,15 +38,15 @@
     "bounty_max": 9, 
     "schooldungeon_max": 4,
     "current_gacha": {
-        "banner": ["50A", "50B", "50C"], 
-        "pickup": ["Aris", "Yuzu", "Midori"],
-        "start": 1686016800, 
-        "end": 1686596400
+        "banner": ["51A", "51B"], 
+        "pickup": ["Serina_Christmas", "Hanae_Christmas"],
+        "start": 1686621600, 
+        "end": 1687831200
     },
     "current_events":{
-        "event": 808, 
-        "start": 1684202400, 
-        "end": 1685386800
+        "event": 819, 
+        "start": 1686639600, 
+        "end": 1687806000
     }, 
     "current_raid": {
         "raid": 2, 

@@ -41,7 +41,7 @@ function header() {
                     <div css={S.NavItems}>
                         <div onClick={() => router.push("/")}>홈</div>
                         <div onClick={() => router.push("/stdList")}>학생</div>
-                        <div>아이템</div>
+                        <div onClick={() => router.push("/furnitureList")}>가구</div>
                         <div>계산기</div>
                     </div>
                     <div></div>

@@ -16,7 +16,12 @@
     "next": "13.3.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-slick": "^0.29.0",
     "react-twitter-embed": "^4.0.4",
+    "slick-carousel": "^1.8.1",
     "typescript": "5.0.4"
+  },
+  "devDependencies": {
+    "@types/react-slick": "^0.23.10"
   }
 }

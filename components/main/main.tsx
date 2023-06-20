@@ -12,17 +12,17 @@ import { TwitterTimelineEmbed } from 'react-twitter-embed';
 function main() {
     return (
         <div css={S.Positioner}>
-            <div css={S.EventArea}>
-                <div css={S.GridTitle}>이벤트 차트 (Global)</div>
-                <CurrentEvent />
-                <CurrentPickup />
-                <CurrentRaid />
-                <CurrentTest />
-                <CurrentCampain />
-                <CurrentBirthday />
-                <div css={S.TwitterTitle}>Twitter (KR)</div>
-                <div css={S.TwittArea}>
-                    <TwitterTimelineEmbed sourceType="profile" screenName="KR_BlueArchive" />
+            <div css={S.AreaContainer}>
+                <div css={S.EventArea}>
+                    <CurrentEvent />
+                    <CurrentPickup />
+                    <CurrentRaid />
+                    <CurrentCampain />
+                    <CurrentBirthday />
+                    <div css={S.TwittArea}>
+                        <TwitterTimelineEmbed sourceType="profile" screenName="KR_BlueArchive" />
+                    </div>
+                    <div css={S.Copyright}>Copyright 2023. NEXON GAMES & YOSTAR all rights reserved</div>
                 </div>
             </div>
         </div>

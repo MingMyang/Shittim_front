@@ -1,8 +1,8 @@
 import { css } from "@emotion/react";
 
 export const Positioner = css`
-    grid-column: 1 / span 2;
-    grid-row: 4 / span 1;
+    grid-column: 2 / span 1;
+    grid-row: 3 / span 1;
     border-radius: 5px;
     background-color: var(--grid-box-color);
     overflow-x: hidden;

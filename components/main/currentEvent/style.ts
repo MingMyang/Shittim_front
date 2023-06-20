@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 
 export const Positioner = css`
     grid-column: 1 / span 2;
-    grid-row: 2 / span 1;
+    grid-row: 1 / span 2;
     border-radius: 5px;
     background-color: var(--grid-box-color);
 
@@ -25,14 +25,10 @@ export const BannerTitle = css`
     z-index: 1;
 `
 
-export const EventLogo = css`
-    width: 50%;
-
-    position: absolute;
-    top: 45%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
+export const EventBG = css`
+    width: 100%;
+    height: calc(100% - 40px);
+    border-radius: 5px 5px 0px 0px;
 `
 
 export const EventName = css`

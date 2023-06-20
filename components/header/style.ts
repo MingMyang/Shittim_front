@@ -2,19 +2,20 @@ import { css } from "@emotion/react";
 
 export const Positioner = css`
     width: 100vw;
-    height: 65px;
-    padding: 0vh 10vw 0vh 10vw;
+    height: 60px;
     background-color: var(--bg-color);
     backdrop-filter: blur(7.5px);
 
     display: flex;
     justify-content: center;
     position: fixed;
+    z-index: 1;
 `
 
 export const Navigation = css`
-    width: 1400px;
+    width: 1800px;
     height: 100%;
+    padding: 0px 10vw 0px 10vw;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -38,7 +39,7 @@ export const LogoImg = css`
     width: 80px;
     position: absolute;
     left: 50%;
-    top: -15%;
+    top: -20%;
     transform: translate(-50%, -0%);
     filter: var(--icon-color)
 `
@@ -49,7 +50,7 @@ export const IconText = css`
     text-align: center;
     position: absolute;
     left: 50%;
-    bottom: 10%;
+    bottom: 2.5%;
     transform: translate(-50%, -0%);
 `
 
@@ -76,7 +77,7 @@ export const 뭐로하지 = css`
     height: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: right;
     align-items: center;
 `
 

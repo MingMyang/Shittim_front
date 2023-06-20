@@ -10,18 +10,18 @@ function currentEvent() {
     const currentEventName = event.events[currentEventNo];
     const eventDate: any = useCalcDate(event.current_events.start, event.current_events.end);
 
-    const Positioner = css`
-        ${S.Positioner};
-        background-image:  url(${'images/campaign/Campaign_Event_' + currentEventNo + '_Normal.png'});
+    const EventBG = css`
+        ${S.EventBG};
+        background-image: url(${'/images/eventbg/Event_' + currentEventNo + '.webp'});
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
     `
 
     return (
-        <div css={Positioner}>
+        <div css={S.Positioner}>
             <div css={S.BannerTitle}>메인 이벤트</div>
-            <img css={S.EventLogo} alt='' src={'images/eventlogo/Event_' + currentEventNo + '_Kr.png'} />
+            <div css={EventBG}></div>
             <div css={S.EventName}>{currentEventName} (이벤트 {eventDate.remainingTime})</div>
         </div>
     )

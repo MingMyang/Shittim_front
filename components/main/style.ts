@@ -3,39 +3,45 @@ import { css } from "@emotion/react";
 export const Positioner = css`
     width: 100vw;
     height: 100vh;
-    padding: 65px 10vw 0vh 10vw;
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
+    padding: 60px 0px 0vh 0px;
+    overflow-x: auto;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+        width: 7.5px;
+        height: 7.5px;
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.3);
+    }
+    &::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 5px;
+    }
+`
+
+export const AreaContainer = css`
+    width: 100%;
+    height: 870px;
 `
 
 export const EventArea = css`
-    width: 1500px;
-    height: 800px;
-    padding: 1.5vh 1.5vw 7.5vh 1.5vw;
-    border-radius: 5px;
+    width: 100%;
+    height: 820px;
+    padding: 40px;
     background-color: var(--bg-color);
     backdrop-filter: blur(5px);
 
     display: grid;
-    grid-template-columns: 3fr 3fr 4fr 400px;
-    grid-template-rows: 75px 225px 175px 1fr;
-    grid-gap: 10px;
-`
-
-export const GridTitle = css`
-    grid-column: 1 / span 3;
-    grid-row: 1 / span 1;
-    line-height: 75px;
-    font-size: 35px;
+    justify-content: center;
+    grid-template-columns: 410px 410px 500px 420px;
+    grid-template-rows: 330px 160px 190px;
+    grid-gap: 15px;
+    position: relative;
+    top: 25px;
 `
 
 export const TwittArea = css`
     grid-column: 4 / span 1;
-    grid-row: 2 / span 3;
-    margin: 0px 0vw 0px 1.5vw;
+    grid-row: 1 / span 3;
     border-radius: 10px 5px 5px 10px;
     background-color: var(--grid-box-color);
     overflow-y:auto;
@@ -51,11 +57,10 @@ export const TwittArea = css`
     }
 `
 
-export const TwitterTitle = css`
-    grid-column: 4 / span 1;
-    grid-row: 1 / span 1;
-    font-size: 25px;
-    line-height: 75px;
-    text-align: center;
-    margin: 0px 0vw 0px 1.5vw;
+export const Copyright = css`
+    font-size: 15px;
+    position: absolute;
+    left: 50%;
+    bottom: 25px;
+    transform: translate(-50%, -0%);
 `

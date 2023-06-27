@@ -6,23 +6,16 @@ import { useRouter } from 'next/router';
 
 function main() {
     const [filter, setFilter] = useState('');
-    const router = useRouter();
-
     const handleChange = (e: any) => {
         setFilter(e.target.value);
     };
-
     const filteredStudents = stdInfo.filter((student) =>
         student.Name.toLowerCase().includes(filter.toLowerCase())
     );
 
+    const router = useRouter();
     const handleStudentClick = (student: any) => {
-        router.push({
-            pathname: `/stdList/${student.PathName}`,
-        },
-        `/stdList/${student.PathName}`
-        );
-    };
+        router.push({pathname: `/stdList/${student.PathName}`});};
 
     return (
         <div css={S.Positioner}>

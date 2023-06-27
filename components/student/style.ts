@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 export const Positioner = css`
     width: 100vw;
     height: 100vh;
-    padding: 65px 10vw 0vh 10vw;
+    padding: 65px 0px 0vh 0px;
 
     display: flex;
     justify-content: center;
@@ -34,9 +34,9 @@ export const FilterArea = css`
 `
 
 export const Filter = css`
-    width: 50%;
+    width: calc(100% - 221px);
     height: 40px;
-    margin: 0px 10px 0px 30px;
+    margin: 0px 30px 0px 30px;
     background: none;
     border: none;
     border-bottom: 1px solid;

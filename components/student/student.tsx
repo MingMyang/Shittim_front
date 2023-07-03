@@ -15,7 +15,8 @@ function main() {
 
     const router = useRouter();
     const handleStudentClick = (student: any) => {
-        router.push({pathname: `/stdList/${student.PathName}`});};
+        router.push({pathname: `/stdList/${student.PathName}`});
+    };
 
     return (
         <div css={S.Positioner}>

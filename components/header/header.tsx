@@ -1,9 +1,16 @@
 /** @jsxImportSource @emotion/react */
+import Link from 'next/link';
 import * as S from "./style"
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 
 function header() {
+    const router = useRouter();
+    const link = router.asPath;
+    const name = link.split("/")[1];
+    if (name === "") {
+
+    }
     const [isDarkMode, setIsDarkMode] = useState(false);
     const darkModeHandler = () => {
         setIsDarkMode(!isDarkMode);
@@ -27,6 +34,13 @@ function header() {
         }
     }, []);
 
+    const menuData = [
+        { id: '1', name: '홈', path: '/' },
+        { id: '2', name: '학생', path: '/stdList' },
+        { id: '3', name: '가구', path: '/furnitureList' },
+        { id: '4', name: '계산기', path: '' },
+    ]
+
     return (
         <div css={S.Positioner}>
             <nav css={S.Navigation}>
@@ -39,12 +53,12 @@ function header() {
                 </div>
                 <div css={S.뭐로하지}>
                     <div css={S.NavItems}>
-                        <div onClick={() => router.push("/")}>홈</div>
-                        <div onClick={() => router.push("/stdList")}>학생</div>
-                        <div onClick={() => router.push("/furnitureList")}>가구</div>
-                        <div>계산기</div>
+                        {menuData.map((menu) => {
+                            return(
+                                <Link key={menu.id} href={menu.path} css={S.NavLink}><div style={{backgroundColor: menu.path === router.pathname ? 'var(--nav-select-color)' : ''}}>{menu.name}</div></Link>
+                            );
+                        })}
                     </div>
-                    <div></div>
                 </div>
                 <label css={S.ThemeArea}>
                     <input checked={isDarkMode} onClick={darkModeHandler} css={S.ThemeSwitch} type="checkbox" />

@@ -41,7 +41,7 @@ export const LogoImg = css`
     left: 50%;
     top: -20%;
     transform: translate(-50%, -0%);
-    filter: var(--icon-color)
+    filter: var(--icon-color);
 `
 
 export const IconText = css`
@@ -89,6 +89,11 @@ export const NavItems = css`
     display: flex;
     justify-content: space-between;
     align-items: center;
+`
+
+export const NavLink = css`
+    color: var(--base-color);
+    text-decoration: none;
     div{
         width: 75px;
         height: 40px;
@@ -98,7 +103,7 @@ export const NavItems = css`
         display: flex;
         justify-content: center;
         align-items: center;
-        :hover{
+        :hover{ 
             background-color: var(--nav-select-color);
         }
     }

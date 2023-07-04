@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 export const Positioner = css`
     width: 100vw;
     height: 100vh;
-    padding: 65px 0px 0vh 0px;
+    padding: 75px 10px 10px 10px;
     overflow: hidden;
 
     display: flex;
@@ -14,7 +14,8 @@ export const Positioner = css`
 
 export const MainArea = css`
     width: 1300px;
-    height: 90%;
+    height: 850px;
+    overflow: auto;
     border-radius: 5px;
 
     display: flex;
@@ -84,7 +85,7 @@ export const ChangeTapContainer = css`
 `
 
 export const StdentArea = css`
-    width: calc(100% - 600px);
+    width: calc(100% - 650px);
     height: 100%;
     padding: 60px 60px 60px 60px;
     display: flex;
@@ -216,11 +217,63 @@ export const AdjustStat = css`
     width: 100%;
     display: flex;
 `
+export const SecondLine = css`
+    margin: 10px 0px 10px 0px;
+`
 export const EquipmentList = css`
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     text-align: center;
+`
+export const WeaponContainer = css`
+    width: 200px;
+    height: 80px;
+    border-radius: 5px;
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    img{
+        height: 55px;
+    }
+`
+export const BaseEquipmentContainer = css`
+    padding: 0px 10px 0px 10px;
+    border-radius: 5px;
+    background-color: var(--bg-color);
+    display: flex;
+    align-items: center;
+`
+export const TierBtnContainer = css`
+    width: 100%;
+    padding: 10px 10px 10px 10px;
+    border-right: 2px solid;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    button{
+        width: 100%;
+        border: 0px;
+        font-family: 'BlueArchive';
+        font-size: 15px;
+        color: var(--base-color);
+        background: none;
+    }
+`
+export const BaseEquipment = css`
+    width: 240px;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    div{
+        width: 80px;
+        img{
+            height: 75px;
+        }
+    }
 `
 export const StatScale = css`
     width: calc(100% - 100px);

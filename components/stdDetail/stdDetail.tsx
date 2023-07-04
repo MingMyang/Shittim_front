@@ -20,9 +20,20 @@ function stdDetail(props: any) {
     }
 
     //장비 스테이터스 계산
+    const [equipmentChecked, setEquipmentChecked] = useState(false);
+    const handleEquipmentCheckChange = () => {
+        setEquipmentChecked(!equipmentChecked);
+    };
     const [tier, setTier] = useState(1);
-    const tierChange = (event: any) => {
-        setTier(Number(event.target.value));
+    const increaseTier = () => {
+        if (tier < 8) { // 최대값을 10으로 지정
+            setTier(tier + 1);
+        }
+    };
+    const decreaseTier = () => {
+        if (tier > 1) { // 최소값을 0으로 지정
+            setTier(tier - 1);
+        }
     };
     const currentEquipment = equipment.filter(equipment => {
         for (let i = 0; i < 3; i++) {
@@ -31,10 +42,6 @@ function stdDetail(props: any) {
             }
         }
     });
-    const [isChecked, setIsChecked] = useState(true);
-    const handleCheckboxChange = () => {
-        setIsChecked(!isChecked);
-    };
     const [coefficientHP_Equip, setCoefficientHP_Equip] = useState(0);
     const [coefficientAtk_Equip, setCoefficientAtk_Equip] = useState(0);
     const [coefficientDef_Equip, setCoefficientDef_Equip] = useState(0);
@@ -72,7 +79,7 @@ function stdDetail(props: any) {
             for (let j = 0; j < currentEquipment[i].StatType.length; j++) {
                 let type = currentEquipment[i].StatType[j];
                 let value = currentEquipment[i].StatValue[j][1];
-                if (isChecked === true) {
+                if (equipmentChecked === true) {
                     if (type === "MaxHP_Coefficient") {
                         CoefficientHP += value;
                     } else if (type === "AttackPower_Coefficient") {
@@ -116,9 +123,13 @@ function stdDetail(props: any) {
         setBaseDef_Equip(BaseDef);
         setBaseHP_Equip(BaseHP);
         setCoefficientHeal_Equip(CoefficientHeal);
-    }, [tier, isChecked])
+    }, [tier, equipmentChecked])
 
     //전용장비 레벨 조정
+    const [weaponChecked, setWeaponChecked] = useState(false);
+    const handleWeaponCheckChange = () => {
+        setWeaponChecked(!weaponChecked);
+    };
     const [weaponLevel, setWeaponLevel] = useState(0);
     const weaponLevelChange = (event: any) => {
         setWeaponLevel(event.target.value);
@@ -273,26 +284,34 @@ function stdDetail(props: any) {
                                 <div css={S.TerrianInfo}><div css={S.TerrianImgContainer}><img alt='' src={'/images/ui/Terrain_Indoor.png'} /></div><div css={S.TerrianEmoContainer}><img alt='' src={'/images/ui/Ingame_Emo_Adaptresult' + String(Indoor) + '.png'} /></div></div>
                             </div>
                             <div css={S.EquipmentApplyContainer}>
-                                <div css={S.CheckBoxContainer}><input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} /><p>장비 적용</p></div>
-                                <div css={S.CheckBoxContainer}><input type="checkbox" checked={false} /><p>고유무기 적용</p></div>
+                                <div css={S.CheckBoxContainer}><input type="checkbox" checked={equipmentChecked} onChange={handleEquipmentCheckChange} /><p>장비 적용</p></div>
+                                <div css={S.CheckBoxContainer}><input type="checkbox" checked={weaponChecked} onChange={handleWeaponCheckChange} /><p>고유무기 적용</p></div>
                                 <div css={S.CheckBoxContainer}><input type="checkbox" checked={false} /><p>애장품 적용</p></div>
                                 <div css={S.CheckBoxContainer}><input type="checkbox" checked={false} /><p>강화스킬 적용</p></div>
                             </div>
                         </div>
 
                         {/*두번째 줄(전용장비/착용장비/애장품, 티어조정)*/}
-                        <div>
-                            <div css={S.AdjustStat}>
-                                <input css={S.StatScale} type="range" min="1" max="8" value={tier} onChange={tierChange} disabled={!isChecked} />
-                                <span> Tier {tier}</span>
-                            </div>
-                            <div css={S.EquipmentList} style={{ opacity: isChecked ? 1 : 0.5, pointerEvents: isChecked ? 'auto' : 'none' }}>
-                                {currentEquipment.map((result: any) => (
-                                    <div key={result.id}>
-                                        <img alt='' loading='lazy' src={'/images/equipment/' + result.Icon + '.png'} />
-                                        <div>{result.Name}</div>
+                        <div css={S.SecondLine}>
+                            <div css={S.EquipmentList}>
+                                <div css={S.WeaponContainer}>
+                                    <div style={{ opacity: weaponChecked ? 1 : 0.5, pointerEvents: weaponChecked ? 'auto' : 'none' }}>AR</div>
+                                    <img style={{ opacity: weaponChecked ? 1 : 0.5, pointerEvents: weaponChecked ? 'auto' : 'none' }} alt='' src={'/images/weapon/' + currentStudent?.WeaponImg + '.png'} />
+                                </div>
+                                <div css={S.BaseEquipmentContainer}>
+                                    <div css={S.TierBtnContainer} style={{ opacity: equipmentChecked ? 1 : 0.5, pointerEvents: equipmentChecked ? 'auto' : 'none' }}>
+                                        <button onClick={increaseTier}>▲</button>
+                                        <div>{tier}</div>
+                                        <button onClick={decreaseTier}>▼</button>
                                     </div>
-                                ))}
+                                    <div css={S.BaseEquipment} style={{ opacity: equipmentChecked ? 1 : 0.5, pointerEvents: equipmentChecked ? 'auto' : 'none' }}>
+                                        {currentEquipment.map((result: any) => (
+                                            <div key={result.id} >
+                                                <img alt='' src={'/images/equipment/' + result.Icon + '.png'} />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -328,13 +347,6 @@ function stdDetail(props: any) {
         }
     };
 
-    const tapData = [
-        { id: '1', name: '홈', path: '/' },
-        { id: '2', name: '학생', path: '/stdList' },
-        { id: '3', name: '가구', path: '/furnitureList' },
-        { id: '4', name: '계산기', path: '' },
-    ]
-
     return (
         <div css={S.Positioner}>
             <div css={S.MainArea}>
@@ -350,10 +362,10 @@ function stdDetail(props: any) {
                         </div>
                     </div>
                     <div css={S.ChangeTapContainer}>
-                        <button onClick={() => handleTapClick('summary')} style={{backgroundColor: selectedTap === 'summary' ? 'var(--nav-select-color)' : ''}}>요약정보</button>
-                        <button onClick={() => handleTapClick('skills')} style={{backgroundColor: selectedTap === 'skills' ? 'var(--nav-select-color)' : ''}}>스킬</button>
-                        <button onClick={() => handleTapClick('items')} style={{backgroundColor: selectedTap === 'items' ? 'var(--nav-select-color)' : ''}}>고유무기</button>
-                        <button onClick={() => handleTapClick('profile')} style={{backgroundColor: selectedTap === 'profile' ? 'var(--nav-select-color)' : ''}}>프로필</button>
+                        <button onClick={() => handleTapClick('summary')} style={{ backgroundColor: selectedTap === 'summary' ? 'var(--nav-select-color)' : '' }}>요약정보</button>
+                        <button onClick={() => handleTapClick('skills')} style={{ backgroundColor: selectedTap === 'skills' ? 'var(--nav-select-color)' : '' }}>스킬</button>
+                        <button onClick={() => handleTapClick('items')} style={{ backgroundColor: selectedTap === 'items' ? 'var(--nav-select-color)' : '' }}>고유무기</button>
+                        <button onClick={() => handleTapClick('profile')} style={{ backgroundColor: selectedTap === 'profile' ? 'var(--nav-select-color)' : '' }}>프로필</button>
                     </div>
                     {renderContent()}
                 </div>

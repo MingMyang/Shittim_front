@@ -274,9 +274,9 @@ function stdDetail(props: any) {
                             </div>
                             <div css={S.EquipmentApplyContainer}>
                                 <div css={S.CheckBoxContainer}><input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} /><p>장비 적용</p></div>
-                                <div css={S.CheckBoxContainer}><input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} /><p>고유무기 적용</p></div>
-                                <div css={S.CheckBoxContainer}><input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} /><p>애장품 적용</p></div>
-                                <div css={S.CheckBoxContainer}><input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} /><p>강화스킬 적용</p></div>
+                                <div css={S.CheckBoxContainer}><input type="checkbox" checked={false} /><p>고유무기 적용</p></div>
+                                <div css={S.CheckBoxContainer}><input type="checkbox" checked={false} /><p>애장품 적용</p></div>
+                                <div css={S.CheckBoxContainer}><input type="checkbox" checked={false} /><p>강화스킬 적용</p></div>
                             </div>
                         </div>
 

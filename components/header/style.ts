@@ -9,7 +9,7 @@ export const Positioner = css`
     display: flex;
     justify-content: center;
     position: fixed;
-    z-index: 1;
+    z-index: 10;
 `
 
 export const Navigation = css`

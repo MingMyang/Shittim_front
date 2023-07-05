@@ -15,7 +15,6 @@ export const Positioner = css`
 export const MainArea = css`
     width: 1300px;
     height: 850px;
-    overflow: auto;
     border-radius: 5px;
 
     display: flex;
@@ -60,6 +59,7 @@ export const BelongType = css`
     height: 20px;
     border-radius: 5px;
     font-size: 16px;
+    color: white;
     transform: skew(-10deg);
     p{
         text-align: center;

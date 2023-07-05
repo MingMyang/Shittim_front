@@ -81,56 +81,66 @@ function stdDetail(props: any) {
                 let value = currentEquipment[i].StatValue[j][1];
                 if (equipmentChecked === true) {
                     if (type === "MaxHP_Coefficient") {
-                        setCoefficientHP_Equip(value);
+                        setCoefficientHP_Equip((prev) => prev + value);
                     } else if (type === "AttackPower_Coefficient") {
-                        setCoefficientAtk_Equip(value);
+                        setCoefficientAtk_Equip((prev) => prev + value);
                     } else if (type === "DefensePower_Coefficient") {
-                        setCoefficientDef_Equip(value);
+                        setCoefficientDef_Equip((prev) => prev + value);
                     } else if (type === "MaxHP_Base") {
-                        setBaseHP_Equip(value);
+                        setBaseHP_Equip((prev) => prev + value);
                     } else if (type === "AttackPower_Base") {
-                        setBaseAtk_Equip(value);
+                        setBaseAtk_Equip((prev) => prev + value);
                     } else if (type === "DefensePower_Base") {
-                        setBaseDef_Equip(value);
+                        setBaseDef_Equip((prev) => prev + value);
                     } else if (type === "CriticalPoint_Base") {
-                        setCritical_Equip(value);
+                        setCritical_Equip((prev) => prev + value);
                     } else if (type === "CriticalDamageRate_Base") {
-                        setCriticalDamage_Equip(value);
+                        setCriticalDamage_Equip((prev) => prev + value);
                     } else if (type === "CriticalChanceResistPoint_Base") {
-                        setCriticalResist_Equip(value);
+                        setCriticalResist_Equip((prev) => prev + value);
                     } else if (type === "CriticalDamageResistRate_Base") {
-                        setCriticalDamageResist_Equip(value);
+                        setCriticalDamageResist_Equip((prev) => prev + value);
                     } else if (type === "AccuracyPoint_Base") {
-                        setAccuracy_Equip(value);
+                        setAccuracy_Equip((prev) => prev + value);
                     } else if (type === "DodgePoint_Base") {
-                        setDodge_Equip(value);
+                        setDodge_Equip((prev) => prev + value);
                     } else if (type === "HealPower_Coefficient") {
-                        setCoefficientHeal_Equip(value);
+                        setCoefficientHeal_Equip((prev) => prev + value);
                     } else if (type === "HealEffectivenessRate_Base") {
-                        setHealEffectiveness_Equip(value);
+                        setHealEffectiveness_Equip((prev) => prev + value);
                     } else if (type === "OppressionPower_Coefficient") {
-                        setCoefficientOppression_Equip(value);
+                        setCoefficientOppression_Equip((prev) => prev + value);
                     } else if (type === "OppressionResist_Coefficient") {
-                        setCoefficientOppressionResist_Equip(value);
+                        setCoefficientOppressionResist_Equip((prev) => prev + value);
                     }
                 }
             }
         }
-    }, [tier, equipmentChecked])
+    }, [tier, equipmentChecked]);
 
     //고유무기
     const [weaponChecked, setWeaponChecked] = useState(false);
     const handleWeaponCheckChange = () => {
         setWeaponChecked(!weaponChecked);
     };
-    const [weaponLevel, setWeaponLevel] = useState(0);
+    const [weaponLevel, setWeaponLevel] = useState(30);
     const weaponLevelChange = (event: any) => {
         setWeaponLevel(event.target.value);
     };
     let weaponLevelscale: number = parseFloat(((weaponLevel - 1) / 99).toFixed(4));
-    let WeaponHP:number = Math.round(currentStudent?.Weapon.MaxHP1 + (currentStudent?.Weapon.MaxHP100 - currentStudent?.Weapon.MaxHP1) * weaponLevelscale);
-    let WeaponAttack: number = Math.round(currentStudent?.Weapon.AttackPower1 + (currentStudent?.Weapon.AttackPower100 - currentStudent?.Weapon.AttackPower1) * weaponLevelscale);
-    let WeaponHeal: number = Math.round(currentStudent?.Weapon.HealPower1 + (currentStudent?.Weapon.HealPower100 - currentStudent?.Weapon.HealPower1) * weaponLevelscale);
+    const [weaponHP, setWeaponHP] = useState(0);
+    const [weaponAtk, setWeaponAtk] = useState(0);
+    const [weaponHeal, setWeaponHeal] = useState(0);
+    useEffect(() => {
+        setWeaponHP(0);
+        setWeaponAtk(0);
+        setWeaponHeal(0);
+        if (weaponChecked === true) {
+            setWeaponHP(Math.round(currentStudent?.Weapon.MaxHP1 + (currentStudent?.Weapon.MaxHP100 - currentStudent?.Weapon.MaxHP1) * weaponLevelscale));
+            setWeaponAtk(Math.round(currentStudent?.Weapon.AttackPower1 + (currentStudent?.Weapon.AttackPower100 - currentStudent?.Weapon.AttackPower1) * weaponLevelscale));
+            setWeaponHeal(Math.round(currentStudent?.Weapon.HealPower1 + (currentStudent?.Weapon.HealPower100 - currentStudent?.Weapon.HealPower1) * weaponLevelscale));
+        }
+    }, [weaponChecked]);
 
     //레벨 조정
     const [level, setLevel] = useState(1);
@@ -158,10 +168,15 @@ function stdDetail(props: any) {
     let HealPower: number = Math.ceil(parseFloat((Math.round((currentStudent?.HealPower1 + (currentStudent?.HealPower100 - currentStudent?.HealPower1) * levelscale).toFixed(4)) * transcendenceHeal).toFixed(4)));
 
     //최종 스테이터스 계산식(1차 스텟 + etc)
-    let totalHP: number = Math.ceil((MaxHP + baseHP_Equip + WeaponHP) * (1 + (coefficientHP_Equip / 10000)));
-    let totalAtk: number = Math.ceil((AttackPower + baseAtk_Equip + WeaponAttack) * (1 + (coefficientAtk_Equip / 10000)));
-    let totalDef: number = Math.ceil((DefensePower + baseDef_Equip) * (1 + (coefficientDef_Equip / 10000)));
-    let totalHeal: number = Math.ceil((HealPower + WeaponHeal) * (1 + (coefficientHeal_Equip / 10000)));
+    let totalHP: number = Math.round((MaxHP + baseHP_Equip + weaponHP) * (1 + (coefficientHP_Equip / 10000)));
+    let totalAtk: number = Math.round((AttackPower + baseAtk_Equip + weaponAtk) * (1 + (coefficientAtk_Equip / 10000)));
+    let totalDef: number = Math.round((DefensePower + baseDef_Equip) * (1 + (coefficientDef_Equip / 10000)));
+    let totalHeal: number = Math.round((HealPower + weaponHeal) * (1 + (coefficientHeal_Equip / 10000)));
+    let totalAccuracy: number = Math.round((currentStudent?.AccuracyPoint + accuracy_Equip) * (1 + 0));
+    let totalDodge: number = Math.round((currentStudent?.DodgePoint + dodge_Equip) * (1 + 0));
+    let totalCritical: number = Math.round((currentStudent?.CriticalPoint + critical_Equip) * (1 + 0));
+    let totalCriticalDamage: number = Math.round((currentStudent?.CriticalDamageRate + criticalDamage_Equip) * (1 + 0));
+    let totalStability: number = Math.round((currentStudent?.StabilityPoint) * (1 + 0));
 
     //팀업타입 컬러조정
     let TypeColor;
@@ -309,22 +324,30 @@ function stdDetail(props: any) {
 
                         {/*세번째 줄(총 스테이터스, 레벨조정)*/}
                         <div>
-                            <div css={S.AdjustStat}>
-                                <input css={S.StatScale} type="range" min="1" max="85" value={level} onChange={levelChange} />
-                                <span> Lv. {level}</span>
+                            <div css={S.LevelScaleContainer}>
+                                <input type="range" min="1" max="85" value={level} onChange={levelChange} />
+                                <p> Lv. {level}</p>
                             </div>
-                            <p>최대체력: {totalHP} </p>
-                            <p>공격력: {totalAtk} </p>
-                            <p>방어력: {totalDef} </p>
-                            <p>치유력: {totalHeal}</p>
-                            <p>명중 수치: {currentStudent?.AccuracyPoint}</p>
-                            <p>회피 수치: {currentStudent?.DodgePoint}</p>
-                            <p>치명 수치: {currentStudent?.CriticalPoint}</p>
-                            <p>치명 대미지: {currentStudent?.CriticalDamageRate / 100}%</p>
-                            <p>안정 수치: {currentStudent?.StabilityPoint}</p>
-                            <p>사거리: {currentStudent?.Range}</p>
-                            <p>장탄 수: {currentStudent?.AmmoCount}</p>
-                            <p>소모 탄약: 공격당 {currentStudent?.AmmoCost}발</p>
+                            <div css={S.StatContainer}>
+                                <p>최대체력: {totalHP} </p>
+                                <p>공격력: {totalAtk} </p>
+                                <p>방어력: {totalDef} ({((1 / ((totalDef + 1666) / 1666)) * 100).toFixed(2)}%의 피해)</p>
+                                <p>치유력: {totalHeal}</p>
+                                <br />
+                                <p>명중 수치: {totalAccuracy}</p>
+                                <p>회피 수치: {totalDodge}</p>
+                                <p>회심치: {totalCritical} ({((totalCritical / (totalCritical + 666.666)) * 100).toFixed(2)}%)</p>
+                                <p>회심피해: {totalCriticalDamage / 100}%</p>
+                                <br />
+                                <p>안정치: {totalStability} (최소 {(((totalStability / (totalStability + 1000)) + 0.2) * 100).toFixed(2)}%의 피해)</p>
+                                <p>사거리: {currentStudent?.Range}</p>
+                                <p>CC 강화력: 100</p>
+                                <p>CC 저항력: 100</p>
+                                <br />
+                                <p>코스트 회복력: {currentStudent?.RegenCost}</p>
+                                <p>장탄 수: {currentStudent?.AmmoCount}</p>
+                                <p>소모 탄약: 공격당 {currentStudent?.AmmoCost}발</p>
+                            </div>
                         </div>
                     </div>
                 );
@@ -342,7 +365,6 @@ function stdDetail(props: any) {
     return (
         <div css={S.Positioner}>
             <div css={S.MainArea}>
-
                 <div css={S.InfoArea}>
                     <div css={S.SummaryProfile}>
                         <div css={S.Belong}>
@@ -361,7 +383,6 @@ function stdDetail(props: any) {
                     </div>
                     {renderContent()}
                 </div>
-
                 <div css={S.StdentArea}>
                     <img css={S.StandingImg} alt='' src={'/images/student/portrait/Portrait_' + currentStudent?.DevName + '.webp'} />
                 </div>

@@ -32,12 +32,10 @@ export const InfoArea = css`
     position: relative;
     z-index: 2;
 `
-
 export const SummaryProfile = css`
     display: flex;
     flex-direction: column;
 `
-
 export const Belong = css`
     display: flex;
 `
@@ -103,6 +101,7 @@ export const StandingImg = css`
 export const DetailInfo = css`
     padding: 0px 20px 0px 20px;
 `
+
 export const FirstLine = css`
     display: flex;
 `
@@ -160,7 +159,6 @@ export const TypeText = css`
     line-height: 30px;
     transform: skew(10deg);
 `
-
 export const TerrianInfoContainer = css`
     width: 115px;
     height: 70px;
@@ -200,7 +198,6 @@ export const TerrianEmoContainer = css`
         transform: skew(10deg);
     }
 `
-
 export const EquipmentApplyContainer = css`
     transform: skew(-10deg);
 `
@@ -212,13 +209,8 @@ export const CheckBoxContainer = css`
     }
 `
 
-
-export const AdjustStat = css`
-    width: 100%;
-    display: flex;
-`
 export const SecondLine = css`
-    margin: 10px 0px 10px 0px;
+    margin: 10px 0px 5px 0px;
 `
 export const EquipmentList = css`
     width: 100%;
@@ -248,7 +240,8 @@ export const BaseEquipmentContainer = css`
 `
 export const TierBtnContainer = css`
     width: 100%;
-    padding: 10px 10px 10px 10px;
+    height: 55px;
+    padding: 0px 10px 0px 10px;
     border-right: 2px solid;
     display: flex;
     flex-direction: column;
@@ -275,6 +268,34 @@ export const BaseEquipment = css`
         }
     }
 `
-export const StatScale = css`
-    width: calc(100% - 100px);
+
+export const ThirdLine = css`
+
+`
+export const LevelScaleContainer = css`
+    width: 100%;
+    height: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    input{
+        width: calc(100% - 70px);
+    }
+    p{
+        width: 60px;
+        height: 25px;
+        line-height: 25px;
+        border-radius: 100px;
+        text-align: center;
+        background-color: var(--bg-color);
+    }
+`
+
+export const StatContainer = css`
+    width: 100%;
+    height: 400px;
+    padding: 30px;
+    border-radius: 5px;
+    margin: 5px 0px 0px 0px;
+    background-color: var(--bg-color);
 `

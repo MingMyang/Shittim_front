@@ -19,7 +19,7 @@ function stdDetail(props: any) {
         return translatedWord ? translatedWord : word;
     }
 
-    //장비 스테이터스 계산
+    //장비
     const [equipmentChecked, setEquipmentChecked] = useState(false);
     const handleEquipmentCheckChange = () => {
         setEquipmentChecked(!equipmentChecked);
@@ -57,75 +57,68 @@ function stdDetail(props: any) {
     const [coefficientHeal_Equip, setCoefficientHeal_Equip] = useState(0);
     const [healEffectiveness_Equip, setHealEffectiveness_Equip] = useState(0);
     const [coefficientOppression_Equip, setCoefficientOppression_Equip] = useState(0);
-    const [coefficientOppressionResist_Equip, setCoefficientOppressionResist_Equip_Equip] = useState(0);
+    const [coefficientOppressionResist_Equip, setCoefficientOppressionResist_Equip] = useState(0);
     useEffect(() => {
-        let CoefficientHP = 0;
-        let CoefficientAtk = 0;
-        let CoefficientDef = 0;
-        let BaseHP = 0;
-        let BaseAtk = 0;
-        let BaseDef = 0;
-        let Critical = 0;
-        let CriticalDamage = 0;
-        let CriticalResist = 0;
-        let CriticalDamegeResist = 0;
-        let Accuracy = 0;
-        let Dodge = 0;
-        let CoefficientHeal = 0;
-        let HealEffectiveness = 0;
-        let CoefficientOppression = 0;
-        let CoefficientOppressionResist = 0;
+        setCoefficientHP_Equip(0);
+        setCoefficientAtk_Equip(0);
+        setCoefficientDef_Equip(0);
+        setBaseHP_Equip(0);
+        setBaseAtk_Equip(0);
+        setBaseDef_Equip(0);
+        setCritical_Equip(0);
+        setCriticalDamage_Equip(0);
+        setCriticalResist_Equip(0);
+        setCriticalDamageResist_Equip(0);
+        setAccuracy_Equip(0);
+        setDodge_Equip(0);
+        setCoefficientHeal_Equip(0);
+        setHealEffectiveness_Equip(0);
+        setCoefficientOppression_Equip(0);
+        setCoefficientOppressionResist_Equip(0);
         for (let i = 0; i < currentEquipment.length; i++) {
             for (let j = 0; j < currentEquipment[i].StatType.length; j++) {
                 let type = currentEquipment[i].StatType[j];
                 let value = currentEquipment[i].StatValue[j][1];
                 if (equipmentChecked === true) {
                     if (type === "MaxHP_Coefficient") {
-                        CoefficientHP += value;
+                        setCoefficientHP_Equip(value);
                     } else if (type === "AttackPower_Coefficient") {
-                        CoefficientAtk += value;
+                        setCoefficientAtk_Equip(value);
                     } else if (type === "DefensePower_Coefficient") {
-                        CoefficientDef += value;
+                        setCoefficientDef_Equip(value);
                     } else if (type === "MaxHP_Base") {
-                        BaseHP += value;
+                        setBaseHP_Equip(value);
                     } else if (type === "AttackPower_Base") {
-                        BaseAtk += value;
+                        setBaseAtk_Equip(value);
                     } else if (type === "DefensePower_Base") {
-                        BaseDef += value;
+                        setBaseDef_Equip(value);
                     } else if (type === "CriticalPoint_Base") {
-                        Critical += value;
+                        setCritical_Equip(value);
                     } else if (type === "CriticalDamageRate_Base") {
-                        CriticalDamage += value;
+                        setCriticalDamage_Equip(value);
                     } else if (type === "CriticalChanceResistPoint_Base") {
-                        CriticalResist += value;
+                        setCriticalResist_Equip(value);
                     } else if (type === "CriticalDamageResistRate_Base") {
-                        CriticalDamegeResist += value;
+                        setCriticalDamageResist_Equip(value);
                     } else if (type === "AccuracyPoint_Base") {
-                        Accuracy += value;
+                        setAccuracy_Equip(value);
                     } else if (type === "DodgePoint_Base") {
-                        Dodge += value;
+                        setDodge_Equip(value);
                     } else if (type === "HealPower_Coefficient") {
-                        CoefficientHeal += value;
+                        setCoefficientHeal_Equip(value);
                     } else if (type === "HealEffectivenessRate_Base") {
-                        HealEffectiveness += value;
+                        setHealEffectiveness_Equip(value);
                     } else if (type === "OppressionPower_Coefficient") {
-                        CoefficientOppression += value;
+                        setCoefficientOppression_Equip(value);
                     } else if (type === "OppressionResist_Coefficient") {
-                        CoefficientOppressionResist += value;
+                        setCoefficientOppressionResist_Equip(value);
                     }
                 }
             }
         }
-        setCoefficientAtk_Equip(CoefficientAtk);
-        setCoefficientDef_Equip(CoefficientDef);
-        setCoefficientHP_Equip(CoefficientHP);
-        setBaseAtk_Equip(BaseAtk);
-        setBaseDef_Equip(BaseDef);
-        setBaseHP_Equip(BaseHP);
-        setCoefficientHeal_Equip(CoefficientHeal);
     }, [tier, equipmentChecked])
 
-    //전용장비 레벨 조정
+    //고유무기
     const [weaponChecked, setWeaponChecked] = useState(false);
     const handleWeaponCheckChange = () => {
         setWeaponChecked(!weaponChecked);
@@ -135,10 +128,9 @@ function stdDetail(props: any) {
         setWeaponLevel(event.target.value);
     };
     let weaponLevelscale: number = parseFloat(((weaponLevel - 1) / 99).toFixed(4));
-    //전용장비 스테이터스 계산
-    let WeaponHP = Math.round(currentStudent?.Weapon.MaxHP1 + (currentStudent?.Weapon.MaxHP100 - currentStudent?.Weapon.MaxHP1) * weaponLevelscale)
-    let WeaponAttack: number = Math.round(currentStudent?.Weapon.AttackPower1 + (currentStudent?.Weapon.AttackPower100 - currentStudent?.Weapon.AttackPower1) * weaponLevelscale)
-    let WeaponHeal: number = Math.round(currentStudent?.Weapon.HealPower1 + (currentStudent?.Weapon.HealPower100 - currentStudent?.Weapon.HealPower1) * weaponLevelscale)
+    let WeaponHP:number = Math.round(currentStudent?.Weapon.MaxHP1 + (currentStudent?.Weapon.MaxHP100 - currentStudent?.Weapon.MaxHP1) * weaponLevelscale);
+    let WeaponAttack: number = Math.round(currentStudent?.Weapon.AttackPower1 + (currentStudent?.Weapon.AttackPower100 - currentStudent?.Weapon.AttackPower1) * weaponLevelscale);
+    let WeaponHeal: number = Math.round(currentStudent?.Weapon.HealPower1 + (currentStudent?.Weapon.HealPower100 - currentStudent?.Weapon.HealPower1) * weaponLevelscale);
 
     //레벨 조정
     const [level, setLevel] = useState(1);
@@ -295,7 +287,7 @@ function stdDetail(props: any) {
                         <div css={S.SecondLine}>
                             <div css={S.EquipmentList}>
                                 <div css={S.WeaponContainer}>
-                                    <div style={{ opacity: weaponChecked ? 1 : 0.5, pointerEvents: weaponChecked ? 'auto' : 'none' }}>AR</div>
+                                    <div style={{ opacity: weaponChecked ? 1 : 0.5, pointerEvents: weaponChecked ? 'auto' : 'none' }}>AR (Lv. {weaponLevel})</div>
                                     <img style={{ opacity: weaponChecked ? 1 : 0.5, pointerEvents: weaponChecked ? 'auto' : 'none' }} alt='' src={'/images/weapon/' + currentStudent?.WeaponImg + '.png'} />
                                 </div>
                                 <div css={S.BaseEquipmentContainer}>

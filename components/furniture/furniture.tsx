@@ -35,9 +35,6 @@ function furniture() {
                     ))}
                 </div>
             </div>
-            <div css={S.FurnitureDetail}>
-
-            </div>
         </div>
     );
 }

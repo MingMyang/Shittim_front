@@ -142,6 +142,22 @@ function stdDetail(props: any) {
         }
     }, [weaponChecked]);
 
+    //애장품
+    const GearInfo = (gear: any) => {
+        const {Gear} = gear;
+        if (Gear === undefined) {
+            return <img alt='' src={'/images/gear/Gear_Icon_Empty.png'} />
+        }
+        else {
+            if (Object.keys(Gear.gear)?.length > 0) {
+                return <img alt='' src={'/images/gear/Gear_Icon_Empty.png'} />;
+            }
+            else {
+                return <img alt='' src={'/images/gear/' + gear?.gear?.Icon + '.png'} />;
+            }
+        }
+    }
+
     //레벨 조정
     const [level, setLevel] = useState(1);
     const levelChange = (event: any) => {
@@ -318,6 +334,9 @@ function stdDetail(props: any) {
                                             </div>
                                         ))}
                                     </div>
+                                    <div css={S.CherishedItem}>
+                                        <GearInfo gear={currentStudent?.Gear} />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -331,12 +350,12 @@ function stdDetail(props: any) {
                             <div css={S.StatContainer}>
                                 <p>최대체력: {totalHP} </p>
                                 <p>공격력: {totalAtk} </p>
-                                <p>방어력: {totalDef} ({((1 / ((totalDef + 1666) / 1666)) * 100).toFixed(2)}%의 피해)</p>
+                                <p>방어력: {totalDef} ({(100 - ((1 / ((totalDef + 1666) / 1666)) * 100)).toFixed(2)}%의 피해 감소)</p>
                                 <p>치유력: {totalHeal}</p>
                                 <br />
                                 <p>명중 수치: {totalAccuracy}</p>
                                 <p>회피 수치: {totalDodge}</p>
-                                <p>회심치: {totalCritical} ({((totalCritical / (totalCritical + 666.666)) * 100).toFixed(2)}%)</p>
+                                <p>회심치: {totalCritical} | {((totalCritical / (totalCritical + 666.666)) * 100).toFixed(2)}%</p>
                                 <p>회심피해: {totalCriticalDamage / 100}%</p>
                                 <br />
                                 <p>안정치: {totalStability} (최소 {(((totalStability / (totalStability + 1000)) + 0.2) * 100).toFixed(2)}%의 피해)</p>
@@ -344,6 +363,7 @@ function stdDetail(props: any) {
                                 <p>CC 강화력: 100</p>
                                 <p>CC 저항력: 100</p>
                                 <br />
+                                <p>받는 회복효과 강화율: 100%</p>
                                 <p>코스트 회복력: {currentStudent?.RegenCost}</p>
                                 <p>장탄 수: {currentStudent?.AmmoCount}</p>
                                 <p>소모 탄약: 공격당 {currentStudent?.AmmoCost}발</p>
@@ -352,11 +372,11 @@ function stdDetail(props: any) {
                     </div>
                 );
             case 'skills':
-                return <div>Comming Soon!</div>;
+                return <div css={S.DetailInfo}>Comming Soon!</div>;
             case 'items':
-                return <div>Comming Soon!</div>;
+                return <div css={S.DetailInfo}>Comming Soon!</div>;
             case 'profile':
-                return <div>Comming Soon!</div>;
+                return <div css={S.DetailInfo}>Comming Soon!</div>;
             default:
                 return null;
         }

@@ -25,7 +25,7 @@ export const MainArea = css`
 export const InfoArea = css`
     width: 650px;
     height: 100%;
-    padding: 50px;
+    padding: 30px 15px 30px 15px;
     background-color: var(--bg-color);
     backdrop-filter: blur(7.5px);
 
@@ -99,10 +99,11 @@ export const StandingImg = css`
 `
 
 export const DetailInfo = css`
-    padding: 0px 20px 0px 20px;
+    padding: 0px 10px 0px 10px;
 `
 
 export const FirstLine = css`
+    margin: 20px 0px 10px 0px;
     display: flex;
 `
 export const TypeInfo = css`
@@ -210,7 +211,6 @@ export const CheckBoxContainer = css`
 `
 
 export const SecondLine = css`
-    margin: 10px 0px 5px 0px;
 `
 export const EquipmentList = css`
     width: 100%;
@@ -232,17 +232,15 @@ export const WeaponContainer = css`
     }
 `
 export const BaseEquipmentContainer = css`
-    padding: 0px 10px 0px 10px;
     border-radius: 5px;
     background-color: var(--bg-color);
     display: flex;
     align-items: center;
 `
 export const TierBtnContainer = css`
-    width: 100%;
+    width: 50px;
     height: 55px;
-    padding: 0px 10px 0px 10px;
-    border-right: 2px solid;
+    padding: 0px 5px 0px 5px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -256,25 +254,43 @@ export const TierBtnContainer = css`
     }
 `
 export const BaseEquipment = css`
-    width: 240px;
-    height: 80px;
+    width: 250px;
+    height: 60px;
+    padding: 0px 8px 0px 8px;
+    border-left: 2px solid;
+    border-right: 2px solid;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     div{
         width: 80px;
+        height: 70px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         img{
-            height: 75px;
+            height: 70px;
         }
+    }
+`
+export const CherishedItem = css`
+    width: 70px;
+    height: 70px;
+    margin: 0px 5px 0px 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img{
+        height: 75px;
     }
 `
 
 export const ThirdLine = css`
-
 `
 export const LevelScaleContainer = css`
     width: 100%;
     height: 25px;
+    margin: 5px 0px 5px 0px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -293,9 +309,14 @@ export const LevelScaleContainer = css`
 
 export const StatContainer = css`
     width: 100%;
-    height: 400px;
+    height: 450px;
     padding: 30px;
     border-radius: 5px;
-    margin: 5px 0px 0px 0px;
     background-color: var(--bg-color);
+
+    display: flex;
+    flex-wrap: wrap;
+    p{
+        width: 50%;
+    }
 `

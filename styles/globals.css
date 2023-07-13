@@ -1,6 +1,7 @@
 @font-face {
     font-family: 'BlueArchive';
-    src: url('../public/font/TTF/경기천년제목_Medium.ttf');
+    src: url('../public/font/TTF/경기천년제목_Light.ttf');
+    font-weight: bolder;
 }
 
 *{

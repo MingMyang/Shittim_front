@@ -7,7 +7,7 @@ import equipment from '@/asset/json/equipment.json';
 
 function stdDetail(props: any) {
     //props 데이터 불러오기
-    const currentStudent = props.crrentData;
+    const currentStudent = props.currentData;
     const localizationData: any = localization;
 
     //PathName 정의
@@ -142,9 +142,9 @@ function stdDetail(props: any) {
         }
     }, [weaponChecked]);
 
-    //애장품
+    //애장품(에러 존재)
     const GearInfo = (gear: any) => {
-        const {Gear} = gear;
+        const { Gear } = gear;
         if (Gear === undefined) {
             return <img alt='' src={'/images/gear/Gear_Icon_Empty.png'} />
         }
@@ -208,11 +208,16 @@ function stdDetail(props: any) {
             background-color: Blue;
         `
     }
-    //공방타입 컬러조정
+    //공방타입 컬러조정(스킬 아이콘 포함)
     let TypeAtk: any;
+    let SkillIcon: any;
     if (currentStudent?.BulletType === "Explosion") {
         TypeAtk = css`
             ${S.TypeBox};
+            background-color: #851914;
+        `
+        SkillIcon = css`
+            ${S.SkillIcon};
             background-color: #851914;
         `
     }
@@ -221,10 +226,18 @@ function stdDetail(props: any) {
             ${S.TypeBox};
             background-color: #B68A2E;
         `
+        SkillIcon = css`
+            ${S.SkillIcon};
+            background-color: #B68A2E;
+        `
     }
     else {
         TypeAtk = css`
             ${S.TypeBox};
+            background-color: #396D99;
+        `
+        SkillIcon = css`
+            ${S.SkillIcon};
             background-color: #396D99;
         `
     }
@@ -254,11 +267,7 @@ function stdDetail(props: any) {
         `
     }
 
-    const [selectedTap, setSelectedTap] = useState('summary');
-    const handleTapClick = (tap: any) => {
-        setSelectedTap(tap);
-    };
-
+    //지형상성 반영
     const terrianCalc = (adaptation: number) => {
         if (adaptation === 0) {
             return 'D';
@@ -283,11 +292,57 @@ function stdDetail(props: any) {
         }
 
     }
-
     const Street = terrianCalc(currentStudent?.StreetBattleAdaptation);
     const Outdoor = terrianCalc(currentStudent?.OutdoorBattleAdaptation);
     const Indoor = terrianCalc(currentStudent?.IndoorBattleAdaptation);
 
+
+    //탭 변경사항 감지
+    const [selectedTap, setSelectedTap] = useState('summary');
+    const handleTapClick = (tap: any) => {
+        setSelectedTap(tap);
+    };
+
+    //스킬레벨 조정
+    const [exLevel, setExLevel] = useState(0);
+    const exLevelChange = (event: any) => {
+        setExLevel(event.target.value);
+    };
+    let currentSkills: any[] = [];
+    if (currentStudent?.Skills[0].SkillType === 'autoattack' && currentStudent?.Skills[3].SkillType === 'gearnormal') {
+        currentSkills[0] = currentStudent?.Skills[1]; /* EX */
+        currentSkills[1] = currentStudent?.Skills[2]; /* 노말 */
+        currentSkills[2] = currentStudent?.Skills[4]; /* 강화 */
+        currentSkills[3] = currentStudent?.Skills[6]; /* 서브 */
+        currentSkills[4] = currentStudent?.Skills[3]; /* 노말+ */
+        currentSkills[5] = currentStudent?.Skills[5]; /* 강화+ */
+    }else if (currentStudent?.Skills[0].SkillType === 'autoattack'){
+        currentSkills[0] = currentStudent?.Skills[1]; /* EX */
+        currentSkills[1] = currentStudent?.Skills[2]; /* 노말 */
+        currentSkills[2] = currentStudent?.Skills[3]; /* 강화 */
+        currentSkills[3] = currentStudent?.Skills[5]; /* 서브 */
+        currentSkills[4] = currentStudent?.Skills[4]; /* 강화+ */
+    }else if (currentStudent?.Skills[2].SkillType === 'gearnormal'){
+        currentSkills[0] = currentStudent?.Skills[0]; /* EX */
+        currentSkills[1] = currentStudent?.Skills[1]; /* 노말 */
+        currentSkills[2] = currentStudent?.Skills[3]; /* 강화 */
+        currentSkills[3] = currentStudent?.Skills[4]; /* 서브 */
+        currentSkills[4] = currentStudent?.Skills[2]; /* 노말+ */
+    }else {
+        currentSkills[0] = currentStudent?.Skills[0]; /* EX */
+        currentSkills[1] = currentStudent?.Skills[1]; /* 노말 */
+        currentSkills[2] = currentStudent?.Skills[2]; /* 강화 */
+        currentSkills[3] = currentStudent?.Skills[4]; /* 서브 */
+        currentSkills[4] = currentStudent?.Skills[3]; /* 강화+ */
+    }
+
+    for(let i = 0; i < currentSkills.length; i ++){
+        for (let j = 0; j < currentSkills[i]?.Parameters.length; j++) {
+            let k = j + 1;
+            currentSkills[i].Desc = currentSkills[i].Desc.replace('<?'+k+'>', currentSkills[i].Parameters[j][exLevel]);
+        }
+    
+    }
     const renderContent = () => {
         switch (selectedTap) {
             case 'summary':
@@ -372,7 +427,38 @@ function stdDetail(props: any) {
                     </div>
                 );
             case 'skills':
-                return <div css={S.DetailInfo}>Comming Soon!</div>;
+                return (
+                    <div css={S.DetailInfo}>
+                        <div css={S.SkillContainer}>
+                            <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[0].Icon + '.png'} /></div>
+                            <div>
+                                <h3>EX 스킬 | {currentSkills[0].Name}</h3>
+                                <p>{currentSkills[0].Desc}</p>
+                            </div>
+                        </div>
+                        <div css={S.SkillContainer}>
+                            <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[1].Icon + '.png'} /></div>
+                            <div>
+                            <h3>노말 스킬 | {currentSkills[1].Name}</h3>
+                            <p>{currentSkills[1]?.Desc}</p>
+                            </div>
+                        </div>
+                        <div css={S.SkillContainer}>
+                            <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[2].Icon + '.png'} /></div>
+                            <div>
+                            <h3>강화 스킬 | {currentSkills[2].Name}</h3>
+                            <p>{currentSkills[2]?.Desc}</p>
+                            </div>
+                        </div>
+                        <div css={S.SkillContainer}>
+                            <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[3].Icon + '.png'} /></div>
+                            <div>
+                            <h3>서브 스킬 | {currentSkills[3].Name}</h3>
+                            <p>{currentSkills[3]?.Desc}</p>
+                            </div>
+                        </div>
+                    </div>
+                );
             case 'items':
                 return <div css={S.DetailInfo}>Comming Soon!</div>;
             case 'profile':

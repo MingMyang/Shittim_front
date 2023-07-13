@@ -20,7 +20,7 @@ export default function StudentDetails() {
     return (
         <div css={Backgorund}>
             <Header />
-            <StdDetail crrentData = {currentStudent} />
+            <StdDetail currentData = {currentStudent} />
         </div>
     );
 };

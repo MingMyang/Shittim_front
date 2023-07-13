@@ -306,7 +306,6 @@ export const LevelScaleContainer = css`
         background-color: var(--bg-color);
     }
 `
-
 export const StatContainer = css`
     width: 100%;
     height: 450px;
@@ -318,5 +317,30 @@ export const StatContainer = css`
     flex-wrap: wrap;
     p{
         width: 50%;
+    }
+`
+
+export const SkillContainer = css`
+    width: 100%;
+    margin: 25px 0px 25px 0px;
+    display: flex;
+    h3{
+        margin-bottom: 5px;
+        font-size: 20px;
+    }
+    p{
+        font-size: 18px;
+    }
+`
+export const SkillIcon = css`
+    width: 75px;
+    height: 75px;
+    margin: 0px 12.5px 0px 12.5px;
+    border-radius: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img{
+        height: 75px;
     }
 `

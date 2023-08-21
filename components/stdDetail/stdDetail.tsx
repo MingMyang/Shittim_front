@@ -123,10 +123,7 @@ function stdDetail(props: any) {
     const handleWeaponCheckChange = () => {
         setWeaponChecked(!weaponChecked);
     };
-    const [weaponLevel, setWeaponLevel] = useState(30);
-    const weaponLevelChange = (event: any) => {
-        setWeaponLevel(event.target.value);
-    };
+    const [weaponLevel, setWeaponLevel] = useState(50);
     let weaponLevelscale: number = parseFloat(((weaponLevel - 1) / 99).toFixed(4));
     const [weaponHP, setWeaponHP] = useState(0);
     const [weaponAtk, setWeaponAtk] = useState(0);
@@ -142,7 +139,7 @@ function stdDetail(props: any) {
         }
     }, [weaponChecked]);
 
-    //애장품(에러 존재)
+    //애장품(적용 X)
     const GearInfo = (gear: any) => {
         const { Gear } = gear;
         if (Gear === undefined) {
@@ -164,6 +161,30 @@ function stdDetail(props: any) {
         setLevel(event.target.value);
     };
     let levelscale: number = parseFloat(((level - 1) / 99).toFixed(4));
+
+    //성급 조정
+    const [selectedStars, setSelectedStars] = useState([1, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]);
+    const [clickedStarIndex, setClickedStarIndex] = useState(1);
+    let stdStar = 0;
+    let weaponStar = 0;
+    if(clickedStarIndex > 5){
+        stdStar = 5;
+        weaponStar = clickedStarIndex - 5;
+    } else {
+        stdStar = clickedStarIndex;
+        weaponStar = 0;
+    }
+    const handleUpStarClick = (index: any) => {
+        const updatedOpacities = selectedStars.map((opacity, i) => (i <= index ? 1 : opacity));
+        setSelectedStars(updatedOpacities);
+        setClickedStarIndex(index + 1);
+    };
+    const handleDownStarClick = (index: any) => {
+        const updatedOpacities = selectedStars.map((opacity, i) => (i > index ? 0.5 : opacity));
+        setSelectedStars(updatedOpacities);
+        setClickedStarIndex(index + 1);
+    };
+
     //성급별 성장계수
     let transcendence: any = [];
     let transcendenceAttack: number = 1;
@@ -172,7 +193,7 @@ function stdDetail(props: any) {
     if (transcendence.length == 0) {
         transcendence = [[0, 1000, 1200, 1400, 1700], [0, 500, 700, 900, 1400], [0, 750, 1000, 1200, 1500]];
     }
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < stdStar; i++) {
         transcendenceAttack += transcendence[0][i] / 10000;
         transcendenceHP += transcendence[1][i] / 10000;
         transcendenceHeal += transcendence[2][i] / 10000;
@@ -231,7 +252,7 @@ function stdDetail(props: any) {
             background-color: #B68A2E;
         `
     }
-    else {
+    else if (currentStudent?.BulletType === "Mystic"){
         TypeAtk = css`
             ${S.TypeBox};
             background-color: #396D99;
@@ -239,6 +260,16 @@ function stdDetail(props: any) {
         SkillIcon = css`
             ${S.SkillIcon};
             background-color: #396D99;
+        `
+    }
+    else {
+        TypeAtk = css`
+            ${S.TypeBox};
+            background-color: #9A45A8;
+        `
+        SkillIcon = css`
+            ${S.SkillIcon};
+            background-color: #9A45A8;
         `
     }
     let TypeDef: any;
@@ -316,19 +347,19 @@ function stdDetail(props: any) {
         currentSkills[3] = currentStudent?.Skills[6]; /* 서브 */
         currentSkills[4] = currentStudent?.Skills[3]; /* 노말+ */
         currentSkills[5] = currentStudent?.Skills[5]; /* 강화+ */
-    }else if (currentStudent?.Skills[0].SkillType === 'autoattack'){
+    } else if (currentStudent?.Skills[0].SkillType === 'autoattack') {
         currentSkills[0] = currentStudent?.Skills[1]; /* EX */
         currentSkills[1] = currentStudent?.Skills[2]; /* 노말 */
         currentSkills[2] = currentStudent?.Skills[3]; /* 강화 */
         currentSkills[3] = currentStudent?.Skills[5]; /* 서브 */
         currentSkills[4] = currentStudent?.Skills[4]; /* 강화+ */
-    }else if (currentStudent?.Skills[2].SkillType === 'gearnormal'){
+    } else if (currentStudent?.Skills[2].SkillType === 'gearnormal') {
         currentSkills[0] = currentStudent?.Skills[0]; /* EX */
         currentSkills[1] = currentStudent?.Skills[1]; /* 노말 */
         currentSkills[2] = currentStudent?.Skills[3]; /* 강화 */
         currentSkills[3] = currentStudent?.Skills[4]; /* 서브 */
         currentSkills[4] = currentStudent?.Skills[2]; /* 노말+ */
-    }else {
+    } else {
         currentSkills[0] = currentStudent?.Skills[0]; /* EX */
         currentSkills[1] = currentStudent?.Skills[1]; /* 노말 */
         currentSkills[2] = currentStudent?.Skills[2]; /* 강화 */
@@ -336,12 +367,12 @@ function stdDetail(props: any) {
         currentSkills[4] = currentStudent?.Skills[3]; /* 강화+ */
     }
 
-    for(let i = 0; i < currentSkills.length; i ++){
+    for (let i = 0; i < currentSkills.length; i++) {
         for (let j = 0; j < currentSkills[i]?.Parameters.length; j++) {
             let k = j + 1;
-            currentSkills[i].Desc = currentSkills[i].Desc.replace('<?'+k+'>', currentSkills[i].Parameters[j][exLevel]);
+            currentSkills[i].Desc = currentSkills[i].Desc.replace('<?' + k + '>', currentSkills[i].Parameters[j][exLevel]);
         }
-    
+
     }
     const renderContent = () => {
         switch (selectedTap) {
@@ -373,7 +404,7 @@ function stdDetail(props: any) {
                         <div css={S.SecondLine}>
                             <div css={S.EquipmentList}>
                                 <div css={S.WeaponContainer}>
-                                    <div style={{ opacity: weaponChecked ? 1 : 0.5, pointerEvents: weaponChecked ? 'auto' : 'none' }}>AR (Lv. {weaponLevel})</div>
+                                    <div style={{ opacity: weaponChecked ? 1 : 0.5, pointerEvents: weaponChecked ? 'auto' : 'none' }}>AR [ Lv. {weaponLevel} ]</div>
                                     <img style={{ opacity: weaponChecked ? 1 : 0.5, pointerEvents: weaponChecked ? 'auto' : 'none' }} alt='' src={'/images/weapon/' + currentStudent?.WeaponImg + '.png'} />
                                 </div>
                                 <div css={S.BaseEquipmentContainer}>
@@ -397,7 +428,22 @@ function stdDetail(props: any) {
                         </div>
 
                         {/*세번째 줄(총 스테이터스, 레벨조정)*/}
-                        <div>
+                        <div css={S.ThirdLine}>
+                            <div css={S.StarScaleContainer}>
+                                {selectedStars.map((opacity, index) => (
+                                    <img src={ index >= 5 ? '/images/ui/Common_Icon_Formation_Star_2.png' : '/images/ui/Common_Icon_Formation_Star.png'} 
+                                        key={index}
+                                        style={{ opacity: opacity, cursor: 'pointer' }}
+                                        onClick={() => {
+                                            if (opacity === 0.5) {
+                                                handleUpStarClick(index)
+                                            } else {
+                                                handleDownStarClick(index)
+                                            }
+                                        }} 
+                                    />
+                                ))}
+                            </div>
                             <div css={S.LevelScaleContainer}>
                                 <input type="range" min="1" max="85" value={level} onChange={levelChange} />
                                 <p> Lv. {level}</p>
@@ -433,28 +479,28 @@ function stdDetail(props: any) {
                             <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[0].Icon + '.png'} /></div>
                             <div>
                                 <h3>EX 스킬 | {currentSkills[0].Name}</h3>
-                                <p>{currentSkills[0].Desc}</p>
+                                <p>{currentSkills[0]?.Desc}</p>
                             </div>
                         </div>
                         <div css={S.SkillContainer}>
                             <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[1].Icon + '.png'} /></div>
                             <div>
-                            <h3>노말 스킬 | {currentSkills[1].Name}</h3>
-                            <p>{currentSkills[1]?.Desc}</p>
+                                <h3>노말 스킬 | {currentSkills[1].Name}</h3>
+                                <p>{currentSkills[1]?.Desc}</p>
                             </div>
                         </div>
                         <div css={S.SkillContainer}>
                             <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[2].Icon + '.png'} /></div>
                             <div>
-                            <h3>강화 스킬 | {currentSkills[2].Name}</h3>
-                            <p>{currentSkills[2]?.Desc}</p>
+                                <h3>강화 스킬 | {currentSkills[2].Name}</h3>
+                                <p>{currentSkills[2]?.Desc}</p>
                             </div>
                         </div>
                         <div css={S.SkillContainer}>
                             <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[3].Icon + '.png'} /></div>
                             <div>
-                            <h3>서브 스킬 | {currentSkills[3].Name}</h3>
-                            <p>{currentSkills[3]?.Desc}</p>
+                                <h3>서브 스킬 | {currentSkills[3].Name}</h3>
+                                <p>{currentSkills[3]?.Desc}</p>
                             </div>
                         </div>
                     </div>

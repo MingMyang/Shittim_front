@@ -5,6 +5,7 @@ export const Positioner = css`
     height: 60px;
     background-color: var(--bg-color);
     backdrop-filter: blur(7.5px);
+    font-family: 'BlueArchive_Bold';
 
     display: flex;
     justify-content: center;

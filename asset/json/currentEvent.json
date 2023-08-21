@@ -38,20 +38,20 @@
     "bounty_max": 9, 
     "schooldungeon_max": 4,
     "current_gacha": {
-        "banner": ["53A", "53B", "53C"], 
-        "pickup": ["Mine", "Sena", "Chihiro"],
-        "start": 1689040800, 
-        "end": 1689645600
+        "banner": ["57A", "57B"], 
+        "pickup": ["Toki", "Nagisa"],
+        "start": 1692669600, 
+        "end": 1693879200
     },
     "current_events":{
-        "event": 810, 
-        "start": 1689040800, 
-        "end": 1689645600
+        "event": 822, 
+        "start": 1692669600, 
+        "end": 1693879200
     }, 
     "current_raid": {
         "raid": 4, 
-        "terrain": "실내전", 
-        "start": 1687831200, 
-        "end": 1689015600
+        "terrain": "시가전", 
+        "start": 1692669600, 
+        "end": 1693249200
     }
 }

@@ -50,18 +50,20 @@ export const BelongInfo = css`
     padding: 0px 10px 0px 10px;
 `
 export const BelongName = css`
+    font-family: 'BlueArchive_Bold';
     font-size: 37.5px;
 `
 export const BelongType = css`
     width: 80px;
     height: 20px;
     border-radius: 5px;
-    font-size: 16px;
+    font-family: 'BlueArchive_Bold';
+    font-size: 15px;
     color: white;
     transform: skew(-10deg);
     p{
         text-align: center;
-        line-height: 20px;
+        line-height: 21px;
         transform: skew(10deg);
     }
 `
@@ -282,14 +284,30 @@ export const CherishedItem = css`
     align-items: center;
     img{
         height: 75px;
+        filter: var(--icon-color-reverse);
     }
 `
 
 export const ThirdLine = css`
 `
-export const LevelScaleContainer = css`
-    width: 100%;
+export const StarScaleContainer = css`
+    width: 200px;
     height: 25px;
+    border-radius: 100px;
+    background-color: var(--bg-color);
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img{
+        height: 21px;
+        opacity: 0.5;
+    }
+`
+export const LevelScaleContainer = css`
+    width: calc(100% - 200px);
+    height: 25px;
+    padding: 0px 0px 0px 10px;
     margin: 5px 0px 5px 0px;
     display: flex;
     justify-content: space-between;

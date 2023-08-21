@@ -3,6 +3,11 @@
     src: url('../public/font/TTF/경기천년제목_Light.ttf');
     font-weight: bolder;
 }
+@font-face {
+    font-family: 'BlueArchive_Bold';
+    src: url('../public/font/TTF/경기천년제목_Medium.ttf');
+    font-weight: bolder;
+}
 
 *{
     padding: 0px;
@@ -21,6 +26,7 @@
     color: black;
     --base-color: black;
     --icon-color: invert(1);
+    --icon-color-reverse: invert(0);
     --theme-color: rgba(40, 40, 40, 0.75);
     --nav-select-color: rgba(250, 250, 250, 0.75);
     --bg-color: rgba(225, 225, 225, 0.6);
@@ -31,6 +37,7 @@
     color: white;
     --base-color: white;
     --icon-color: invert(0);
+    --icon-color-reverse: invert(1);
     --theme-color: rgba(240, 240, 240, 0.5);
     --nav-select-color: rgba(50, 50, 50, 0.75);
     --bg-color: rgba(50, 50, 50, 0.6);

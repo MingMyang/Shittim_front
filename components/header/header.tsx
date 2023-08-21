@@ -47,7 +47,7 @@ function header() {
                 <div css={S.FullLogo} onClick={() => router.push("/")}>
                     <div css={S.Icon}>
                         <img css={S.LogoImg} alt='' src='/images/schoolicon/School_Icon_MILLENNIUM_W.png' />
-                        <div css={S.IconText}>- ARONA -</div>
+                        <div css={S.IconText}>- ARIS -</div>
                     </div>
                     <div css={S.LogoText}><span css={S.FirstText}>Schale</span><span css={S.SecondText}>DataBase</span></div>
                 </div>

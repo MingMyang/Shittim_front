@@ -540,7 +540,6 @@ function stdDetail(props: any) {
                                 <div>CV. &nbsp; &nbsp;{currentStudent.CharacterVoice}</div>
                             </div>
                             <div css={S.FavorItemContainer}>
-                                선호하는 선물
                             </div>
                         </div>
                     </div>

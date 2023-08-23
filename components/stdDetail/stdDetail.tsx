@@ -4,6 +4,7 @@ import { css } from '@emotion/react';
 import { useState, useEffect } from "react";
 import localization from '@/asset/json/localization.json';
 import equipment from '@/asset/json/equipment.json';
+import ReactHtmlParser from 'react-html-parser';
 
 function stdDetail(props: any) {
     //props 데이터 불러오기
@@ -167,7 +168,7 @@ function stdDetail(props: any) {
     const [clickedStarIndex, setClickedStarIndex] = useState(1);
     let stdStar = 0;
     let weaponStar = 0;
-    if(clickedStarIndex > 5){
+    if (clickedStarIndex > 5) {
         stdStar = 5;
         weaponStar = clickedStarIndex - 5;
     } else {
@@ -252,7 +253,7 @@ function stdDetail(props: any) {
             background-color: #B68A2E;
         `
     }
-    else if (currentStudent?.BulletType === "Mystic"){
+    else if (currentStudent?.BulletType === "Mystic") {
         TypeAtk = css`
             ${S.TypeBox};
             background-color: #396D99;
@@ -431,7 +432,7 @@ function stdDetail(props: any) {
                         <div css={S.ThirdLine}>
                             <div css={S.StarScaleContainer}>
                                 {selectedStars.map((opacity, index) => (
-                                    <img src={ index >= 5 ? '/images/ui/Common_Icon_Formation_Star_2.png' : '/images/ui/Common_Icon_Formation_Star.png'} 
+                                    <img src={index >= 5 ? '/images/ui/Common_Icon_Formation_Star_2.png' : '/images/ui/Common_Icon_Formation_Star.png'}
                                         key={index}
                                         style={{ opacity: opacity, cursor: 'pointer' }}
                                         onClick={() => {
@@ -440,7 +441,7 @@ function stdDetail(props: any) {
                                             } else {
                                                 handleDownStarClick(index)
                                             }
-                                        }} 
+                                        }}
                                     />
                                 ))}
                             </div>
@@ -478,28 +479,28 @@ function stdDetail(props: any) {
                         <div css={S.SkillContainer}>
                             <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[0].Icon + '.png'} /></div>
                             <div>
-                                <h3>EX 스킬 | {currentSkills[0].Name}</h3>
+                                <h3>EX 스킬 | {ReactHtmlParser(currentSkills[0].Name)}</h3>
                                 <p>{currentSkills[0]?.Desc}</p>
                             </div>
                         </div>
                         <div css={S.SkillContainer}>
                             <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[1].Icon + '.png'} /></div>
                             <div>
-                                <h3>노말 스킬 | {currentSkills[1].Name}</h3>
+                                <h3>노말 스킬 | {ReactHtmlParser(currentSkills[1].Name)}</h3>
                                 <p>{currentSkills[1]?.Desc}</p>
                             </div>
                         </div>
                         <div css={S.SkillContainer}>
                             <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[2].Icon + '.png'} /></div>
                             <div>
-                                <h3>강화 스킬 | {currentSkills[2].Name}</h3>
+                                <h3>강화 스킬 | {ReactHtmlParser(currentSkills[2].Name)}</h3>
                                 <p>{currentSkills[2]?.Desc}</p>
                             </div>
                         </div>
                         <div css={S.SkillContainer}>
                             <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[3].Icon + '.png'} /></div>
                             <div>
-                                <h3>서브 스킬 | {currentSkills[3].Name}</h3>
+                                <h3>서브 스킬 | {ReactHtmlParser(currentSkills[3].Name)}</h3>
                                 <p>{currentSkills[3]?.Desc}</p>
                             </div>
                         </div>
@@ -508,7 +509,42 @@ function stdDetail(props: any) {
             case 'items':
                 return <div css={S.DetailInfo}>Comming Soon!</div>;
             case 'profile':
-                return <div css={S.DetailInfo}>Comming Soon!</div>;
+                return (
+                    <div css={S.DetailInfo}>
+                        <div css={S.HeadProfileContainer}>
+                            <img src={'/images/student/icon/' + currentStudent.CollectionTexture + '.png'} />
+                            <div css={S.CommonInfo}>
+                                <div css={S.InfoText}>
+                                    <div>{translate("SchoolLong", currentStudent?.School)} {currentStudent.SchoolYear}</div>
+                                    <div>{translate("Club", currentStudent?.Club)}</div>
+                                </div>
+                                <div css={S.InfoName}>{currentStudent.FamilyName} {currentStudent.PersonalName}</div>
+                                <div css={S.GetNewCharacterText}>" {currentStudent.CharacterSSRNew} "</div>
+                            </div>
+                        </div>
+                        <div>{ReactHtmlParser(currentStudent.ProfileIntroduction)}</div>
+                        <div css={S.SubContainer}>
+                            <div css={S.SubInfo}>
+                                <div>나이 &nbsp; &nbsp;{currentStudent.CharacterAge}</div>
+                                <div css={S.WhiteLine} />
+                                <div>생일 &nbsp; &nbsp;{currentStudent.Birthday}</div>
+                                <div css={S.WhiteLine} />
+                                <div>신장 &nbsp; &nbsp;{currentStudent.CharHeightMetric}</div>
+                                <div css={S.WhiteLine} />
+                                <div>취미 &nbsp; &nbsp;{currentStudent.Hobby}</div>
+                                <div css={S.WhiteLine} />
+                                <div>원화 &nbsp; &nbsp;{currentStudent.Designer}</div>
+                                <div css={S.WhiteLine} />
+                                <div>그림 &nbsp; &nbsp;{currentStudent.Illustrator}</div>
+                                <div css={S.WhiteLine} />
+                                <div>CV. &nbsp; &nbsp;{currentStudent.CharacterVoice}</div>
+                            </div>
+                            <div css={S.FavorItemContainer}>
+                                선호하는 선물
+                            </div>
+                        </div>
+                    </div>
+                );
             default:
                 return null;
         }

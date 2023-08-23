@@ -362,3 +362,53 @@ export const SkillIcon = css`
         height: 75px;
     }
 `
+
+export const HeadProfileContainer = css`
+    display: flex;
+    margin: 25px 0px 15px 0px;
+    img{
+        border-radius: 10px;
+    }
+`
+export const CommonInfo = css`
+    display: flex;
+    flex-direction: column;
+    padding: 5px 10px 5px 10px;
+`
+export const InfoText = css`
+    font-size: 18px;
+`
+export const InfoName = css`
+    padding: 7.5px 0px 15px 0px;
+    font-size: 27.5px;
+`
+export const GetNewCharacterText = css`
+    font-size: 17px;
+`
+export const SubContainer = css`
+    margin: 15px 0px 15px 0px;
+    display: flex;
+    justify-content: space-between;
+`
+export const SubInfo = css`
+    width: 250px;
+    height: 250px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+`
+export const WhiteLine = css`
+    width: 100%;
+    height: 1px;
+    background-color: var(--base-color);
+`
+export const FavorItemContainer = css`
+    width: calc(100% - 260px);
+    height: 250px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: var(--bg-color);
+`

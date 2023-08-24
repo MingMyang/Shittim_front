@@ -4,6 +4,7 @@ export const Positioner = css`
     width: 100vw;
     height: 100vh;
     padding: 75px 10px 10px 10px;
+    letter-spacing: 0.5px;
     overflow: hidden;
 
     display: flex;
@@ -102,6 +103,7 @@ export const StandingImg = css`
 
 export const DetailInfo = css`
     padding: 0px 10px 0px 10px;
+    margin: 25px 0px 0px 0px;
 `
 
 export const FirstLine = css`
@@ -340,15 +342,28 @@ export const StatContainer = css`
 
 export const SkillContainer = css`
     width: 100%;
-    margin: 25px 0px 25px 0px;
+    padding: 15px 15px 15px 0px;
+    margin: 7.5px 0px 7.5px 0px;
+    background-color: var(--bg-color);
     display: flex;
     h3{
-        margin-bottom: 5px;
+        margin-bottom: 7.5px;
         font-size: 20px;
     }
-    p{
-        font-size: 18px;
-    }
+`
+export const ExIconContainer = css`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
+export const ExCost = css`
+    width: 85px;
+    text-align: center;
+    letter-spacing: 1.5px;
+    padding: 5px;
+    margin-top: 10px;
+    border-radius: 100px;
+    background-color: var(--grid-box-color);
 `
 export const SkillIcon = css`
     width: 75px;
@@ -361,6 +376,14 @@ export const SkillIcon = css`
     img{
         height: 75px;
     }
+`
+export const SkillDesc = css`
+    height: calc(100% - 25px);
+    font-size: 18px;
+    line-height: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 `
 
 export const HeadProfileContainer = css`
@@ -384,6 +407,9 @@ export const InfoName = css`
 `
 export const GetNewCharacterText = css`
     font-size: 17px;
+`
+export const ProfileIntroduction = css`
+    line-height: 20px;
 `
 export const SubContainer = css`
     margin: 15px 0px 15px 0px;

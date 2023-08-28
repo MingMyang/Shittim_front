@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 import { useState, useEffect } from "react";
 import localization from '@/asset/json/localization.json';
 import equipment from '@/asset/json/equipment.json';
-import ReactHtmlParser from 'react-html-parser';
+import parse from 'html-react-parser';
 
 function stdDetail(props: any) {
     //props 데이터 불러오기
@@ -502,7 +502,7 @@ function stdDetail(props: any) {
                                 <div css={S.ExCost}>COST: {currentSkills[0]?.Cost[exLevel]}</div>
                             </div>
                             <div>
-                                <h3>EX 스킬 | {ReactHtmlParser(currentSkills[0]?.Name)}</h3>
+                                <h3>EX 스킬 | {parse(currentSkills[0]?.Name)}</h3>
                                 <p css={S.SkillDesc}>{currentSkills[0]?.Desc}</p>
                                 <div css={S.SkillLevelScaleContainer}>
                                     <input type="range" min="1" max="5" value={exLevel} onChange={exLevelChange}/>
@@ -513,21 +513,21 @@ function stdDetail(props: any) {
                         <div css={S.SkillContainer}>
                             <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[1]?.Icon + '.png'} /></div>
                             <div>
-                                <h3>노말 스킬 | {ReactHtmlParser(currentSkills[1]?.Name)}</h3>
+                                <h3>노말 스킬 | {parse(currentSkills[1]?.Name)}</h3>
                                 <p css={S.SkillDesc}>{currentSkills[1]?.Desc}</p>
                             </div>
                         </div>
                         <div css={S.SkillContainer}>
                             <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[2]?.Icon + '.png'} /></div>
                             <div>
-                                <h3>강화 스킬 | {ReactHtmlParser(currentSkills[2]?.Name)}</h3>
+                                <h3>강화 스킬 | {parse(currentSkills[2]?.Name)}</h3>
                                 <p css={S.SkillDesc}>{currentSkills[2]?.Desc}</p>
                             </div>
                         </div>
                         <div css={S.SkillContainer}>
                             <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[3]?.Icon + '.png'} /></div>
                             <div>
-                                <h3>서브 스킬 | {ReactHtmlParser(currentSkills[3]?.Name)}</h3>
+                                <h3>서브 스킬 | {parse(currentSkills[3]?.Name)}</h3>
                                 <p css={S.SkillDesc}>{currentSkills[3]?.Desc}</p>
                             </div>
                         </div>
@@ -549,7 +549,7 @@ function stdDetail(props: any) {
                                 <div css={S.GetNewCharacterText}>" {currentStudent.CharacterSSRNew} "</div>
                             </div>
                         </div>
-                        <div css={S.ProfileIntroduction}>{ReactHtmlParser(currentStudent.ProfileIntroduction)}</div>
+                        <div css={S.ProfileIntroduction}>{parse(currentStudent.ProfileIntroduction)}</div>
                         <div css={S.SubContainer}>
                             <div css={S.SubInfo}>
                                 <div>나이 &nbsp; &nbsp;{currentStudent.CharacterAge}</div>

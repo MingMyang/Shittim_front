@@ -378,12 +378,31 @@ export const SkillIcon = css`
     }
 `
 export const SkillDesc = css`
-    height: calc(100% - 25px);
+    height: calc(100% - 50px);
     font-size: 18px;
     line-height: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+`
+export const SkillLevelScaleContainer = css`
+    width: calc(100%);
+    height: 25px;
+    margin: 5px 0px 5px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    input{
+        width: calc(100% - 70px);
+    }
+    p{
+        width: 60px;
+        height: 25px;
+        line-height: 25px;
+        border-radius: 100px;
+        text-align: center;
+        background-color: var(--bg-color);
+    }
 `
 
 export const HeadProfileContainer = css`

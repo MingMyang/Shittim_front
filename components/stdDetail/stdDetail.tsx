@@ -336,13 +336,13 @@ function stdDetail(props: any) {
     };
 
     //스킬레벨 조정
-    const [exLevel, setExLevel] = useState(0);
+    let currentSkills: any[] = [];
+    const [exLevel, setExLevel] = useState(5);
     const exLevelChange = (event: any) => {
         setExLevel(event.target.value);
     };
 
     //스킬 순서 재정렬
-    let currentSkills: any[] = [];
     if (currentStudent?.Skills[0].SkillType === 'autoattack' && currentStudent?.Skills[3].SkillType === 'gearnormal') {
         currentSkills[0] = currentStudent?.Skills[1]; /* EX */
         currentSkills[1] = currentStudent?.Skills[2]; /* 노말 */
@@ -371,17 +371,16 @@ function stdDetail(props: any) {
     }
 
     //버프 코드 & 스킬 레벨에 따른 코드 텍스트 대체
+    const codeType = [/<b:(.*?)>/g, /<d:(.*?)>/g, /<c:(.*?)>/g, /<s:(.*?)>/g];
+    const buffType = ["Buff_", "Debuff_", "CC_", "Special_"];
     for (let i = 0; i < currentSkills.length; i++) {
         for (let j = 0; j < 4; j++) {
-            const codeType = [/<b:(.*?)>/g, /<d:(.*?)>/g, /<c:(.*?)>/g, /<s:(.*?)>/g];
-            const buffType = ["Buff_", "Debuff_", "CC_", "Special_"];
             const matches = currentSkills[i]?.Desc.match(codeType[j]);
             if (matches) {
                 // 추출한 문자열들에 대해 처리
                 matches.forEach((match: string) => {
                     // <b:(내용)>에서 (내용) 추출
                     const contentKey = buffType[j] + match.slice(3, -1);
-
                     // localization.json에서 일치하는 키값 찾기
                     if (localizationData.BuffName[contentKey]) {
                         const replacement = localizationData.BuffName[contentKey];
@@ -390,12 +389,10 @@ function stdDetail(props: any) {
                 });
             }
         }
-
         for (let k = 0; k < currentSkills[i]?.Parameters.length; k++) {
             let l = k + 1;
             currentSkills[i].Desc = currentSkills[i].Desc.replace('<?' + l + '>', currentSkills[i].Parameters[k][exLevel]);
         }
-
     }
 
     const renderContent = () => {
@@ -501,32 +498,36 @@ function stdDetail(props: any) {
                     <div css={S.DetailInfo}>
                         <div css={S.SkillContainer}>
                             <div css={S.ExIconContainer}>
-                                <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[0].Icon + '.png'} /></div>
-                                <div css={S.ExCost}>COST: {currentSkills[0].Cost[exLevel]}</div>
+                                <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[0]?.Icon + '.png'} /></div>
+                                <div css={S.ExCost}>COST: {currentSkills[0]?.Cost[exLevel]}</div>
                             </div>
                             <div>
-                                <h3>EX 스킬 | {ReactHtmlParser(currentSkills[0].Name)}</h3>
+                                <h3>EX 스킬 | {ReactHtmlParser(currentSkills[0]?.Name)}</h3>
                                 <p css={S.SkillDesc}>{currentSkills[0]?.Desc}</p>
+                                <div css={S.SkillLevelScaleContainer}>
+                                    <input type="range" min="1" max="5" value={exLevel} onChange={exLevelChange}/>
+                                    <p> Lv. {exLevel}</p>
+                                </div>
                             </div>
                         </div>
                         <div css={S.SkillContainer}>
-                            <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[1].Icon + '.png'} /></div>
+                            <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[1]?.Icon + '.png'} /></div>
                             <div>
-                                <h3>노말 스킬 | {ReactHtmlParser(currentSkills[1].Name)}</h3>
+                                <h3>노말 스킬 | {ReactHtmlParser(currentSkills[1]?.Name)}</h3>
                                 <p css={S.SkillDesc}>{currentSkills[1]?.Desc}</p>
                             </div>
                         </div>
                         <div css={S.SkillContainer}>
-                            <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[2].Icon + '.png'} /></div>
+                            <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[2]?.Icon + '.png'} /></div>
                             <div>
-                                <h3>강화 스킬 | {ReactHtmlParser(currentSkills[2].Name)}</h3>
+                                <h3>강화 스킬 | {ReactHtmlParser(currentSkills[2]?.Name)}</h3>
                                 <p css={S.SkillDesc}>{currentSkills[2]?.Desc}</p>
                             </div>
                         </div>
                         <div css={S.SkillContainer}>
-                            <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[3].Icon + '.png'} /></div>
+                            <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[3]?.Icon + '.png'} /></div>
                             <div>
-                                <h3>서브 스킬 | {ReactHtmlParser(currentSkills[3].Name)}</h3>
+                                <h3>서브 스킬 | {ReactHtmlParser(currentSkills[3]?.Name)}</h3>
                                 <p css={S.SkillDesc}>{currentSkills[3]?.Desc}</p>
                             </div>
                         </div>

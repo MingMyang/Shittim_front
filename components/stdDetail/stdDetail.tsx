@@ -414,10 +414,10 @@ function stdDetail(props: any) {
                                 <div css={S.TerrianInfo}><div css={S.TerrianImgContainer}><img alt='' src={'/images/ui/Terrain_Indoor.png'} /></div><div css={S.TerrianEmoContainer}><img alt='' src={'/images/ui/Ingame_Emo_Adaptresult' + String(Indoor) + '.png'} /></div></div>
                             </div>
                             <div css={S.EquipmentApplyContainer}>
-                                <div css={S.CheckBoxContainer}><input type="checkbox" checked={equipmentChecked} onChange={handleEquipmentCheckChange} /><p>장비 적용</p></div>
-                                <div css={S.CheckBoxContainer}><input type="checkbox" checked={weaponChecked} onChange={handleWeaponCheckChange} /><p>고유무기 적용</p></div>
-                                <div css={S.CheckBoxContainer}><input type="checkbox" checked={false} /><p>애장품 적용</p></div>
-                                <div css={S.CheckBoxContainer}><input type="checkbox" checked={false} /><p>강화스킬 적용</p></div>
+                                <div css={S.CheckBoxContainer}><input type="checkbox" defaultChecked={equipmentChecked} onChange={handleEquipmentCheckChange} /><p>장비 적용</p></div>
+                                <div css={S.CheckBoxContainer}><input type="checkbox" defaultChecked={weaponChecked} onChange={handleWeaponCheckChange} /><p>고유무기 적용</p></div>
+                                <div css={S.CheckBoxContainer}><input type="checkbox" defaultChecked={false} readOnly /><p>애장품 적용</p></div>
+                                <div css={S.CheckBoxContainer}><input type="checkbox" defaultChecked={false} readOnly /><p>강화스킬 적용</p></div>
                             </div>
                         </div>
 

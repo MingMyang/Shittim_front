@@ -346,11 +346,15 @@ export const SkillContainer = css`
     margin: 7.5px 0px 7.5px 0px;
     background-color: var(--bg-color);
     display: flex;
+`
+export const SkillDescContaioner = css`
+    width: 100%;
     h3{
         margin-bottom: 7.5px;
         font-size: 20px;
     }
 `
+
 export const ExIconContainer = css`
     display: flex;
     flex-direction: column;
@@ -378,6 +382,7 @@ export const SkillIcon = css`
     }
 `
 export const SkillDesc = css`
+    width: 100%;
     height: calc(100% - 50px);
     font-size: 18px;
     line-height: 20px;
@@ -386,7 +391,7 @@ export const SkillDesc = css`
     justify-content: center;
 `
 export const SkillLevelScaleContainer = css`
-    width: calc(100%);
+    width: 100%;
     height: 25px;
     margin: 5px 0px 5px 0px;
     display: flex;

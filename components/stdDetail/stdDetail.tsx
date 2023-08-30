@@ -337,9 +337,31 @@ function stdDetail(props: any) {
 
     //스킬레벨 조정
     let currentSkills: any[] = [];
-    const [exLevel, setExLevel] = useState(5);
+    //표시되는 값
+    const [exValue, setExValue] = useState(1);
+    const [nomalValue, setNomalValue] = useState(1);
+    const [passiveValue, setPassiveValue] = useState(1);
+    const [subValue, setSubValue] = useState(1);
+    //내부에서 사용하는 값
+    const [exLevel, setExLevel] = useState(exValue - 1);
     const exLevelChange = (event: any) => {
-        setExLevel(event.target.value);
+        setExValue(event.target.value);
+        setExLevel(event.target.value - 1);
+    };
+    const [nomalLevel, setNomalLevel] = useState(nomalValue - 1);
+    const nomalLevelChange = (event: any) => {
+        setNomalValue(event.target.value);
+        setNomalLevel(event.target.value - 1);
+    };
+    const [passiveLevel, setPassiveLevel] = useState(passiveValue - 1);
+    const passiveLevelChange = (event: any) => {
+        setPassiveValue(event.target.value);
+        setPassiveLevel(event.target.value - 1);
+    };
+    const [subLevel, setSubLevel] = useState(subValue - 1);
+    const subLevelChange = (event: any) => {
+        setSubValue(event.target.value);
+        setSubLevel(event.target.value - 1);
     };
 
     //스킬 순서 재정렬
@@ -370,29 +392,43 @@ function stdDetail(props: any) {
         currentSkills[4] = currentStudent?.Skills[3]; /* 강화+ */
     }
 
-    //버프 코드 & 스킬 레벨에 따른 코드 텍스트 대체
     const codeType = [/<b:(.*?)>/g, /<d:(.*?)>/g, /<c:(.*?)>/g, /<s:(.*?)>/g];
     const buffType = ["Buff_", "Debuff_", "CC_", "Special_"];
+
+    const newSkills: any[] = []; // 새로운 스킬 객체를 저장할 배열
+
     for (let i = 0; i < currentSkills.length; i++) {
+        const newSkill = { ...currentSkills[i] }; // 스킬 객체를 복사
+        newSkill.Desc = currentSkills[i]?.Desc; // Desc 속성을 복사
         for (let j = 0; j < 4; j++) {
-            const matches = currentSkills[i]?.Desc.match(codeType[j]);
+            const matches = newSkill.Desc?.match(codeType[j]);
             if (matches) {
-                // 추출한 문자열들에 대해 처리
                 matches.forEach((match: string) => {
-                    // <b:(내용)>에서 (내용) 추출
                     const contentKey = buffType[j] + match.slice(3, -1);
-                    // localization.json에서 일치하는 키값 찾기
                     if (localizationData.BuffName[contentKey]) {
                         const replacement = localizationData.BuffName[contentKey];
-                        currentSkills[i].Desc = currentSkills[i].Desc.replace(match, replacement);
+                        newSkill.Desc = newSkill.Desc.replace(match, replacement);
                     }
                 });
             }
         }
-        for (let k = 0; k < currentSkills[i]?.Parameters.length; k++) {
+        for (let k = 0; k < newSkill.Parameters?.length; k++) {
             let l = k + 1;
-            currentSkills[i].Desc = currentSkills[i].Desc.replace('<?' + l + '>', currentSkills[i].Parameters[k][exLevel]);
+            let levelToAssign;
+            if (i === 0) {
+                levelToAssign = newSkill.Parameters[k][exLevel];
+            } else if (i === 1) {
+                levelToAssign = newSkill.Parameters[k][nomalLevel];
+            } else if (i === 2) {
+                levelToAssign = newSkill.Parameters[k][passiveLevel];
+            } else if (i === 3) {
+                levelToAssign = newSkill.Parameters[k][subLevel];
+            } else {
+                levelToAssign = newSkill.Parameters[k][exLevel];
+            }
+            newSkill.Desc = newSkill.Desc.replace('<?' + l + '>', levelToAssign);
         }
+        newSkills.push(newSkill); // 수정된 스킬 객체를 배열에 추가
     }
 
     const renderContent = () => {
@@ -501,34 +537,46 @@ function stdDetail(props: any) {
                                 <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[0]?.Icon + '.png'} /></div>
                                 <div css={S.ExCost}>COST: {currentSkills[0]?.Cost[exLevel]}</div>
                             </div>
-                            <div>
+                            <div css={S.SkillDescContaioner}>
                                 <h3>EX 스킬 | {parse(currentSkills[0]?.Name)}</h3>
-                                <p css={S.SkillDesc}>{currentSkills[0]?.Desc}</p>
+                                <p css={S.SkillDesc}>{newSkills[0]?.Desc}</p>
                                 <div css={S.SkillLevelScaleContainer}>
-                                    <input type="range" min="1" max="5" value={exLevel} onChange={exLevelChange}/>
-                                    <p> Lv. {exLevel}</p>
+                                    <input type="range" min="1" max="5" value={exValue} onChange={exLevelChange} />
+                                    <p> Lv. {exValue}</p>
                                 </div>
                             </div>
                         </div>
                         <div css={S.SkillContainer}>
                             <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[1]?.Icon + '.png'} /></div>
-                            <div>
+                            <div css={S.SkillDescContaioner}>
                                 <h3>노말 스킬 | {parse(currentSkills[1]?.Name)}</h3>
-                                <p css={S.SkillDesc}>{currentSkills[1]?.Desc}</p>
+                                <p css={S.SkillDesc}>{newSkills[1]?.Desc}</p>
+                                <div css={S.SkillLevelScaleContainer}>
+                                    <input type="range" min="1" max="10" value={nomalValue} onChange={nomalLevelChange} />
+                                    <p> Lv. {nomalValue}</p>
+                                </div>
                             </div>
                         </div>
                         <div css={S.SkillContainer}>
                             <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[2]?.Icon + '.png'} /></div>
-                            <div>
+                            <div css={S.SkillDescContaioner}>
                                 <h3>강화 스킬 | {parse(currentSkills[2]?.Name)}</h3>
-                                <p css={S.SkillDesc}>{currentSkills[2]?.Desc}</p>
+                                <p css={S.SkillDesc}>{newSkills[2]?.Desc}</p>
+                                <div css={S.SkillLevelScaleContainer}>
+                                    <input type="range" min="1" max="10" value={passiveValue} onChange={passiveLevelChange} />
+                                    <p> Lv. {passiveValue}</p>
+                                </div>
                             </div>
                         </div>
                         <div css={S.SkillContainer}>
                             <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[3]?.Icon + '.png'} /></div>
-                            <div>
+                            <div css={S.SkillDescContaioner}>
                                 <h3>서브 스킬 | {parse(currentSkills[3]?.Name)}</h3>
-                                <p css={S.SkillDesc}>{currentSkills[3]?.Desc}</p>
+                                <p css={S.SkillDesc}>{newSkills[3]?.Desc}</p>
+                                <div css={S.SkillLevelScaleContainer}>
+                                    <input type="range" min="1" max="10" value={subValue} onChange={subLevelChange} />
+                                    <p> Lv. {subValue}</p>
+                                </div>
                             </div>
                         </div>
                     </div>

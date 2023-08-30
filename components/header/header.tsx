@@ -25,12 +25,15 @@ function header() {
     useEffect(() => {
         // 로컬 스토리지에서 저장된 테마 가져오기
         const storedTheme = localStorage.getItem('theme');
-        if (storedTheme === 'dark') {
+        if (storedTheme === 'light') {
+            setIsDarkMode(false);
+            document.body.setAttribute("data-theme", "light");
+        } else if (storedTheme === 'dark'){
             setIsDarkMode(true);
             document.body.setAttribute("data-theme", "dark");
-        }
-        else {
-            document.body.setAttribute("data-theme", "light");
+        } else {
+            setIsDarkMode(true);
+            document.body.setAttribute("data-theme", "dark");
         }
     }, []);
 

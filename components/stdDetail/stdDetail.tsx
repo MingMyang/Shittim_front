@@ -20,6 +20,53 @@ function stdDetail(props: any) {
         return translatedWord ? translatedWord : word;
     }
 
+    //저장된 설정값 불러오기
+    useEffect(() => {
+        const storedEquipCheck: any = localStorage?.getItem('EquipCheck');
+        const storedWeaponCheck: any = localStorage?.getItem('WeaponCheck');
+        const storedLevel: any = localStorage?.getItem('level');
+        const storedStar: any = localStorage?.getItem('Star')
+        const storedEx: any = localStorage?.getItem('ExLevel');
+        const storedNomal: any = localStorage?.getItem('NomalLevel');
+        const storedPassive: any = localStorage?.getItem('PassiveLevel');
+        const storedSub: any = localStorage?.getItem('SubLevel');
+        if (storedLevel !== null){
+            setLevel(parseInt(storedLevel));
+        } else {
+            localStorage.setItem("level", "1");
+        }
+        if(storedStar !== null){
+            handleUpStarClick(parseInt(storedStar) - 1);
+        } else{
+            localStorage.setItem("Star", "1");
+        }
+        if (storedEx !== null){
+            setExValue(parseInt(storedEx));
+            setExLevel(exValue - 1);
+            console.log(storedEx);
+        } else {
+            localStorage.setItem("ExLevel", "1");
+        }
+        if (storedNomal !== null){
+            setNomalValue(parseInt(storedNomal));
+            setNomalLevel(nomalValue - 1);
+        } else {
+            localStorage.setItem("NomalLevel", "1");
+        }
+        if (storedPassive !== null){
+            setPassiveValue(parseInt(storedPassive));
+            setPassiveLevel(passiveValue -1);
+        } else {
+            localStorage.setItem("PassiveLevel", "1");
+        }
+        if (storedSub !== null){
+            setSubValue(parseInt(storedSub));
+            setSubLevel(subValue - 1);
+        } else {
+            localStorage.setItem("SubLevel", "1");
+        }
+    }, [])
+
     //장비
     const [equipmentChecked, setEquipmentChecked] = useState(false);
     const handleEquipmentCheckChange = () => {
@@ -160,7 +207,9 @@ function stdDetail(props: any) {
     const [level, setLevel] = useState(1);
     const levelChange = (event: any) => {
         setLevel(event.target.value);
+        localStorage.setItem("level", event.target.value);
     };
+    //레벨당 스탯 계수
     let levelscale: number = parseFloat(((level - 1) / 99).toFixed(4));
 
     //성급 조정
@@ -179,13 +228,14 @@ function stdDetail(props: any) {
         const updatedOpacities = selectedStars.map((opacity, i) => (i <= index ? 1 : opacity));
         setSelectedStars(updatedOpacities);
         setClickedStarIndex(index + 1);
+        localStorage.setItem("Star", index + 1);
     };
     const handleDownStarClick = (index: any) => {
         const updatedOpacities = selectedStars.map((opacity, i) => (i > index ? 0.5 : opacity));
         setSelectedStars(updatedOpacities);
         setClickedStarIndex(index + 1);
+        localStorage.setItem("Star", index + 1);
     };
-
     //성급별 성장계수
     let transcendence: any = [];
     let transcendenceAttack: number = 1;
@@ -346,22 +396,26 @@ function stdDetail(props: any) {
     const [exLevel, setExLevel] = useState(exValue - 1);
     const exLevelChange = (event: any) => {
         setExValue(event.target.value);
-        setExLevel(event.target.value - 1);
+        setExLevel(exValue - 1);
+        localStorage.setItem("ExLevel", event.target.value);
     };
     const [nomalLevel, setNomalLevel] = useState(nomalValue - 1);
     const nomalLevelChange = (event: any) => {
         setNomalValue(event.target.value);
-        setNomalLevel(event.target.value - 1);
+        setNomalLevel(nomalValue - 1);
+        localStorage.setItem("NomalLevel", event.target.value);
     };
     const [passiveLevel, setPassiveLevel] = useState(passiveValue - 1);
     const passiveLevelChange = (event: any) => {
         setPassiveValue(event.target.value);
-        setPassiveLevel(event.target.value - 1);
+        setPassiveLevel(passiveValue - 1);
+        localStorage.setItem("PassiveLevel", event.target.value);
     };
     const [subLevel, setSubLevel] = useState(subValue - 1);
     const subLevelChange = (event: any) => {
         setSubValue(event.target.value);
-        setSubLevel(event.target.value - 1);
+        setSubLevel(subValue - 1);
+        localStorage.setItem("SubLevel", event.target.value);
     };
 
     //스킬 순서 재정렬
@@ -394,7 +448,6 @@ function stdDetail(props: any) {
 
     const codeType = [/<b:(.*?)>/g, /<d:(.*?)>/g, /<c:(.*?)>/g, /<s:(.*?)>/g];
     const buffType = ["Buff_", "Debuff_", "CC_", "Special_"];
-
     const newSkills: any[] = []; // 새로운 스킬 객체를 저장할 배열
 
     for (let i = 0; i < currentSkills.length; i++) {

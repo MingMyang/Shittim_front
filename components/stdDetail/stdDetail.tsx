@@ -24,12 +24,18 @@ function stdDetail(props: any) {
     useEffect(() => {
         const storedEquipCheck: any = localStorage?.getItem('EquipCheck');
         const storedWeaponCheck: any = localStorage?.getItem('WeaponCheck');
+        const storedEquipTier: any = localStorage?.getItem('EquipTier');
         const storedLevel: any = localStorage?.getItem('level');
         const storedStar: any = localStorage?.getItem('Star')
         const storedEx: any = localStorage?.getItem('ExLevel');
         const storedNomal: any = localStorage?.getItem('NomalLevel');
         const storedPassive: any = localStorage?.getItem('PassiveLevel');
         const storedSub: any = localStorage?.getItem('SubLevel');
+        if (storedEquipTier !== null){
+            setTier(parseInt(storedEquipTier));
+        } else {
+            localStorage.setItem("EquipTier", "1");
+        }
         if (storedLevel !== null){
             setLevel(parseInt(storedLevel));
         } else {
@@ -43,7 +49,6 @@ function stdDetail(props: any) {
         if (storedEx !== null){
             setExValue(parseInt(storedEx));
             setExLevel(exValue - 1);
-            console.log(storedEx);
         } else {
             localStorage.setItem("ExLevel", "1");
         }
@@ -74,13 +79,15 @@ function stdDetail(props: any) {
     };
     const [tier, setTier] = useState(1);
     const increaseTier = () => {
-        if (tier < 8) { // 최대값을 10으로 지정
+        if (tier < 8) { // 최대값을 8로 지정
             setTier(tier + 1);
+            localStorage.setItem("EquipTier", (tier + 1).toString());
         }
     };
     const decreaseTier = () => {
         if (tier > 1) { // 최소값을 0으로 지정
             setTier(tier - 1);
+            localStorage.setItem("EquipTier", (tier - 1).toString());
         }
     };
     const currentEquipment = equipment.filter(equipment => {
@@ -166,6 +173,50 @@ function stdDetail(props: any) {
         }
     }, [tier, equipmentChecked]);
 
+    //레벨 조정
+    const [level, setLevel] = useState(1);
+    const levelChange = (event: any) => {
+        setLevel(event.target.value);
+        localStorage.setItem("level", event.target.value);
+    };
+    //레벨당 스탯 계수
+    let levelscale: number = parseFloat(((level - 1) / 99).toFixed(4));
+
+    //성급 조정
+    const [selectedStars, setSelectedStars] = useState([1, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]);
+    const [clickedStarIndex, setClickedStarIndex] = useState(1);
+    let stdStar = 0;
+    const handleUpStarClick = (index: any) => {
+        const updatedOpacities = selectedStars.map((opacity, i) => (i <= index ? 1 : opacity));
+        setSelectedStars(updatedOpacities);
+        setClickedStarIndex(index + 1);
+        localStorage.setItem("Star", index + 1);
+    };
+    const handleDownStarClick = (index: any) => {
+        const updatedOpacities = selectedStars.map((opacity, i) => (i > index ? 0.5 : opacity));
+        setSelectedStars(updatedOpacities);
+        setClickedStarIndex(index + 1);
+        localStorage.setItem("Star", index + 1);
+    };
+    if (clickedStarIndex > 5) {
+        stdStar = 5;
+    } else {
+        stdStar = clickedStarIndex;
+    }
+    //성급별 성장계수
+    let transcendence: any = [];
+    let transcendenceAttack: number = 1;
+    let transcendenceHP: number = 1;
+    let transcendenceHeal: number = 1;
+    if (transcendence.length == 0) {
+        transcendence = [[0, 1000, 1200, 1400, 1700], [0, 500, 700, 900, 1400], [0, 750, 1000, 1200, 1500]];
+    }
+    for (let i = 0; i < stdStar; i++) {
+        transcendenceAttack += transcendence[0][i] / 10000;
+        transcendenceHP += transcendence[1][i] / 10000;
+        transcendenceHeal += transcendence[2][i] / 10000;   
+    }
+
     //고유무기
     const [weaponChecked, setWeaponChecked] = useState(false);
     const handleWeaponCheckChange = () => {
@@ -176,16 +227,31 @@ function stdDetail(props: any) {
     const [weaponHP, setWeaponHP] = useState(0);
     const [weaponAtk, setWeaponAtk] = useState(0);
     const [weaponHeal, setWeaponHeal] = useState(0);
+    //전용무기 성급(레벨) 조정
+    useEffect(()=> {
+        if (clickedStarIndex > 5) {
+            if(clickedStarIndex === 6){
+                setWeaponLevel(30);
+            } else if(clickedStarIndex === 7){
+                setWeaponLevel(40);
+            } else if(clickedStarIndex === 8){
+                setWeaponLevel(50);
+            }
+        } else{
+            setWeaponLevel(0);
+        }
+    }, [clickedStarIndex]);
+    //전용무기 스탯 계산
     useEffect(() => {
         setWeaponHP(0);
         setWeaponAtk(0);
         setWeaponHeal(0);
-        if (weaponChecked === true) {
+        if (weaponChecked === true && clickedStarIndex > 5) {
             setWeaponHP(Math.round(currentStudent?.Weapon.MaxHP1 + (currentStudent?.Weapon.MaxHP100 - currentStudent?.Weapon.MaxHP1) * weaponLevelscale));
             setWeaponAtk(Math.round(currentStudent?.Weapon.AttackPower1 + (currentStudent?.Weapon.AttackPower100 - currentStudent?.Weapon.AttackPower1) * weaponLevelscale));
             setWeaponHeal(Math.round(currentStudent?.Weapon.HealPower1 + (currentStudent?.Weapon.HealPower100 - currentStudent?.Weapon.HealPower1) * weaponLevelscale));
         }
-    }, [weaponChecked]);
+    }, [weaponChecked, weaponLevel]);
 
     //애장품(적용 X)
     const GearInfo = (gear: any) => {
@@ -203,52 +269,7 @@ function stdDetail(props: any) {
         }
     }
 
-    //레벨 조정
-    const [level, setLevel] = useState(1);
-    const levelChange = (event: any) => {
-        setLevel(event.target.value);
-        localStorage.setItem("level", event.target.value);
-    };
-    //레벨당 스탯 계수
-    let levelscale: number = parseFloat(((level - 1) / 99).toFixed(4));
 
-    //성급 조정
-    const [selectedStars, setSelectedStars] = useState([1, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]);
-    const [clickedStarIndex, setClickedStarIndex] = useState(1);
-    let stdStar = 0;
-    let weaponStar = 0;
-    if (clickedStarIndex > 5) {
-        stdStar = 5;
-        weaponStar = clickedStarIndex - 5;
-    } else {
-        stdStar = clickedStarIndex;
-        weaponStar = 0;
-    }
-    const handleUpStarClick = (index: any) => {
-        const updatedOpacities = selectedStars.map((opacity, i) => (i <= index ? 1 : opacity));
-        setSelectedStars(updatedOpacities);
-        setClickedStarIndex(index + 1);
-        localStorage.setItem("Star", index + 1);
-    };
-    const handleDownStarClick = (index: any) => {
-        const updatedOpacities = selectedStars.map((opacity, i) => (i > index ? 0.5 : opacity));
-        setSelectedStars(updatedOpacities);
-        setClickedStarIndex(index + 1);
-        localStorage.setItem("Star", index + 1);
-    };
-    //성급별 성장계수
-    let transcendence: any = [];
-    let transcendenceAttack: number = 1;
-    let transcendenceHP: number = 1;
-    let transcendenceHeal: number = 1;
-    if (transcendence.length == 0) {
-        transcendence = [[0, 1000, 1200, 1400, 1700], [0, 500, 700, 900, 1400], [0, 750, 1000, 1200, 1500]];
-    }
-    for (let i = 0; i < stdStar; i++) {
-        transcendenceAttack += transcendence[0][i] / 10000;
-        transcendenceHP += transcendence[1][i] / 10000;
-        transcendenceHeal += transcendence[2][i] / 10000;
-    }
     //학생 레벨 스테이터스 계산식(+ 성급)
     let MaxHP: number = Math.ceil(parseFloat((Math.round((currentStudent?.MaxHP1 + (currentStudent?.MaxHP100 - currentStudent?.MaxHP1) * levelscale).toFixed(4)) * transcendenceHP).toFixed(4)));
     let AttackPower: number = Math.ceil(parseFloat((Math.round((currentStudent?.AttackPower1 + (currentStudent?.AttackPower100 - currentStudent?.AttackPower1) * levelscale).toFixed(4)) * transcendenceAttack).toFixed(4)));

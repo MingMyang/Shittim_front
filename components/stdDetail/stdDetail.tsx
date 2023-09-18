@@ -31,40 +31,40 @@ function stdDetail(props: any) {
         const storedNomal: any = localStorage?.getItem('NomalLevel');
         const storedPassive: any = localStorage?.getItem('PassiveLevel');
         const storedSub: any = localStorage?.getItem('SubLevel');
-        if (storedEquipTier !== null){
+        if (storedEquipTier !== null) {
             setTier(parseInt(storedEquipTier));
         } else {
             localStorage.setItem("EquipTier", "1");
         }
-        if (storedLevel !== null){
+        if (storedLevel !== null) {
             setLevel(parseInt(storedLevel));
         } else {
             localStorage.setItem("level", "1");
         }
-        if(storedStar !== null){
+        if (storedStar !== null) {
             handleUpStarClick(parseInt(storedStar) - 1);
-        } else{
+        } else {
             localStorage.setItem("Star", "1");
         }
-        if (storedEx !== null){
+        if (storedEx !== null) {
             setExValue(parseInt(storedEx));
             setExLevel(exValue - 1);
         } else {
             localStorage.setItem("ExLevel", "1");
         }
-        if (storedNomal !== null){
+        if (storedNomal !== null) {
             setNomalValue(parseInt(storedNomal));
             setNomalLevel(nomalValue - 1);
         } else {
             localStorage.setItem("NomalLevel", "1");
         }
-        if (storedPassive !== null){
+        if (storedPassive !== null) {
             setPassiveValue(parseInt(storedPassive));
-            setPassiveLevel(passiveValue -1);
+            setPassiveLevel(passiveValue - 1);
         } else {
             localStorage.setItem("PassiveLevel", "1");
         }
-        if (storedSub !== null){
+        if (storedSub !== null) {
             setSubValue(parseInt(storedSub));
             setSubLevel(subValue - 1);
         } else {
@@ -214,7 +214,7 @@ function stdDetail(props: any) {
     for (let i = 0; i < stdStar; i++) {
         transcendenceAttack += transcendence[0][i] / 10000;
         transcendenceHP += transcendence[1][i] / 10000;
-        transcendenceHeal += transcendence[2][i] / 10000;   
+        transcendenceHeal += transcendence[2][i] / 10000;
     }
 
     //고유무기
@@ -228,16 +228,16 @@ function stdDetail(props: any) {
     const [weaponAtk, setWeaponAtk] = useState(0);
     const [weaponHeal, setWeaponHeal] = useState(0);
     //전용무기 성급(레벨) 조정
-    useEffect(()=> {
+    useEffect(() => {
         if (clickedStarIndex > 5) {
-            if(clickedStarIndex === 6){
+            if (clickedStarIndex === 6) {
                 setWeaponLevel(30);
-            } else if(clickedStarIndex === 7){
+            } else if (clickedStarIndex === 7) {
                 setWeaponLevel(40);
-            } else if(clickedStarIndex === 8){
+            } else if (clickedStarIndex === 8) {
                 setWeaponLevel(50);
             }
-        } else{
+        } else {
             setWeaponLevel(0);
         }
     }, [clickedStarIndex]);
@@ -524,10 +524,13 @@ function stdDetail(props: any) {
                                 <div css={S.TerrianInfo}><div css={S.TerrianImgContainer}><img alt='' src={'/images/ui/Terrain_Indoor.png'} /></div><div css={S.TerrianEmoContainer}><img alt='' src={'/images/ui/Ingame_Emo_Adaptresult' + String(Indoor) + '.png'} /></div></div>
                             </div>
                             <div css={S.EquipmentApplyContainer}>
-                                <div css={S.CheckBoxContainer}><input type="checkbox" defaultChecked={equipmentChecked} onChange={handleEquipmentCheckChange} /><p>장비 적용</p></div>
-                                <div css={S.CheckBoxContainer}><input type="checkbox" defaultChecked={weaponChecked} onChange={handleWeaponCheckChange} /><p>고유무기 적용</p></div>
-                                <div css={S.CheckBoxContainer}><input type="checkbox" defaultChecked={false} readOnly /><p>애장품 적용</p></div>
-                                <div css={S.CheckBoxContainer}><input type="checkbox" defaultChecked={false} readOnly /><p>강화스킬 적용</p></div>
+                                <div css={S.CheckBoxContainer}><input type="checkbox" defaultChecked={equipmentChecked} onChange={handleEquipmentCheckChange} /><p>장비</p></div>
+                                <div css={S.CheckBoxContainer}><input type="checkbox" defaultChecked={false} readOnly /><p>애장품</p></div>
+                                <div css={S.CheckBoxContainer}><input type="checkbox" defaultChecked={weaponChecked} onChange={handleWeaponCheckChange} /><p>고유무기</p></div>
+                                <div css={S.CheckBoxContainer}><input type="checkbox" defaultChecked={false} readOnly /><p>인연레벨</p></div>
+                            </div>
+                            <div css={S.Block}>
+
                             </div>
                         </div>
 
@@ -580,25 +583,22 @@ function stdDetail(props: any) {
                                 <p> Lv. {level}</p>
                             </div>
                             <div css={S.StatContainer}>
-                                <p>최대체력: {totalHP} </p>
-                                <p>공격력: {totalAtk} </p>
-                                <p>방어력: {totalDef} ({(100 - ((1 / ((totalDef + 1666) / 1666)) * 100)).toFixed(2)}%의 피해 감소)</p>
-                                <p>치유력: {totalHeal}</p>
-                                <br />
-                                <p>명중 수치: {totalAccuracy}</p>
-                                <p>회피 수치: {totalDodge}</p>
-                                <p>회심치: {totalCritical} | {((totalCritical / (totalCritical + 666.666)) * 100).toFixed(2)}%</p>
-                                <p>회심피해: {totalCriticalDamage / 100}%</p>
-                                <br />
-                                <p>안정치: {totalStability} (최소 {(((totalStability / (totalStability + 1000)) + 0.2) * 100).toFixed(2)}%의 피해)</p>
-                                <p>사거리: {currentStudent?.Range}</p>
-                                <p>CC 강화력: 100</p>
-                                <p>CC 저항력: 100</p>
-                                <br />
-                                <p>받는 회복효과 강화율: 100%</p>
-                                <p>코스트 회복력: {currentStudent?.RegenCost}</p>
-                                <p>장탄 수: {currentStudent?.AmmoCount}</p>
-                                <p>소모 탄약: 공격당 {currentStudent?.AmmoCost}발</p>
+                                <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_MaxHP.png'} /></div><p>최대체력: {totalHP} </p></div>
+                                <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_AttackPower.png'} /></div><p>공격력: {totalAtk} </p></div>
+                                <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_DefensePower.png'} /></div><p>방어력: {totalDef} <br /> ( {(100 - ((1 / ((totalDef + 1666) / 1666)) * 100)).toFixed(2)}%의 피해 감소 )</p></div>
+                                <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_HealPower.png'} /></div><p>치유력: {totalHeal}</p></div>
+                                <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_AccuracyPoint.png'} /></div><p>명중 수치: {totalAccuracy}</p></div>
+                                <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_DodgePoint.png'} /></div><p>회피 수치: {totalDodge}</p></div>
+                                <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_CriticalPoint.png'} /></div><p>회심 수치: {totalCritical} | {((totalCritical / (totalCritical + 666.666)) * 100).toFixed(2)}%</p></div>
+                                <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_CriticalDamageRate.png'} /></div><p>회심 피해: {totalCriticalDamage / 100}%</p></div>
+                                <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_CriticalChanceResistPoint.png'} /></div><p>회심 저항률: 100</p></div>
+                                <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_CriticalDamageResistRate.png'} /></div><p>회심 피해 저항률: 50%</p></div>
+                                <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_StabilityPoint.png'} /></div><p>안정치: {totalStability} <br /> ( 최소 {(((totalStability / (totalStability + 1000)) + 0.2) * 100).toFixed(2)}%의 피해 )</p></div>
+                                <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_Range.png'} /></div><p>사거리: {currentStudent?.Range}</p></div>
+                                <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_OppressionPower.png'} /></div><p>CC 강화력: 100</p></div>
+                                <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_OppressionResist.png'} /></div><p>CC 저항력: 100</p></div>
+                                <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_AmmoCount.png'} /></div><p>장탄 수: {currentStudent?.AmmoCount} (공격마다 {currentStudent?.AmmoCost}만큼 소모)</p></div>
+                                <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_RegenCost.png'} /></div><p>코스트 회복력: {currentStudent?.RegenCost}</p></div>
                             </div>
                         </div>
                     </div>
@@ -663,7 +663,7 @@ function stdDetail(props: any) {
                         <div css={S.HeadProfileContainer}>
                             <img src={'/images/student/icon/' + currentStudent.CollectionTexture + '.png'} />
                             <div css={S.CommonInfo}>
-                                <div css={S.InfoText}>
+                                <div>
                                     <div>{translate("SchoolLong", currentStudent?.School)} {currentStudent.SchoolYear}</div>
                                     <div>{translate("Club", currentStudent?.Club)}</div>
                                 </div>

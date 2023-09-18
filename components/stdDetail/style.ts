@@ -128,14 +128,15 @@ export const TypeBox = css`
     transform: skew(-10deg);
 `
 export const TacticRoleImg = css`
-    height: 30px;
+    height: 25px;
+    margin: 2.5px 2.5px 2.5px 0px;
     transform: skew(10deg);
     filter: var(--icon-color);
 `
 export const TacticText = css`
     width: auto;
     height: 30px;
-    font-size: 16px;
+    font-size: 15px;
     text-align: center;
     line-height: 30px;
     transform: skew(10deg);
@@ -149,7 +150,7 @@ export const TypeImgContainer = css`
     justify-content: center;
     align-items: center;
     img{
-        height: 20px;
+        height: 18px;
         transform: skew(10deg);
         filter: invert(50%);
     }
@@ -159,7 +160,7 @@ export const TypeText = css`
     height: 30px;
     border-radius: 0px 5px 5px 0px;
     color: white;
-    font-size: 16px;
+    font-size: 15px;
     text-align: center;
     line-height: 30px;
     transform: skew(10deg);
@@ -205,15 +206,32 @@ export const TerrianEmoContainer = css`
 `
 export const EquipmentApplyContainer = css`
     transform: skew(-10deg);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 5px;
 `
 export const CheckBoxContainer = css`
     display: flex;
+    width: auto;
+    height: 31px;
+    line-height: 31px;
+    padding: 0px 10px 0px 10px;
+    background-color: var(--bg-color);
+    border-radius: 5px;
     p{
-        margin: 0px 0px 0px 5px;
+        margin: 0px 0px 0px 7.5px;
+        font-size: 15px;
         transform: skew(10deg);
     }
 `
-
+export const Block = css`
+    border-bottom: 70px solid var(--bg-color);
+    border-left: 15px solid transparent;
+    height: 0;
+    width: 40px;
+    border-radius: 5px;
+`
 export const SecondLine = css`
 `
 export const EquipmentList = css`
@@ -335,8 +353,28 @@ export const StatContainer = css`
 
     display: flex;
     flex-wrap: wrap;
+`
+export const StatIcon = css`
+    width: 50%;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    div{
+        width: 35px;
+        height: 35px;
+        border-radius: 35px;
+        background-color: var(--nav-select-color);
+        margin: 0px 10px 0px 0px;
+        img{
+            height: 35px;
+            padding: 0px 2.275px 0px 2.275px;
+            margin: 0px 5px 0px 0px;
+            border-radius: 35px;
+            filter: var(--icon-color);
+        }
+    }
     p{
-        width: 50%;
+        line-height: 18px;
     }
 `
 
@@ -354,7 +392,6 @@ export const SkillDescContaioner = css`
         font-size: 20px;
     }
 `
-
 export const ExIconContainer = css`
     display: flex;
     flex-direction: column;
@@ -421,8 +458,6 @@ export const CommonInfo = css`
     display: flex;
     flex-direction: column;
     padding: 5px 10px 5px 10px;
-`
-export const InfoText = css`
     font-size: 18px;
 `
 export const InfoName = css`

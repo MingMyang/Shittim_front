@@ -40,7 +40,7 @@
     --icon-color-reverse: invert(1);
     --theme-color: rgba(240, 240, 240, 0.5);
     --nav-select-color: rgba(50, 50, 50, 0.75);
-    --bg-color: rgba(50, 50, 50, 0.6);
+    --bg-color: rgba(60, 60, 60, 0.6);
     --grid-box-color:  rgba(33, 33, 33, 0.5);
     --grid-text-color: rgba(50, 50, 50, 0.9);
 }

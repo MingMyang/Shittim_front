@@ -16,6 +16,9 @@
     transition: color 0.2s;
     transition: background-color 0.2s;
 }
+html::-webkit-scrollbar {
+        width: 0px; /* 스크롤바 너비 설정 */
+}
 
 :root{
     color: black;

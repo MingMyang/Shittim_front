@@ -2,31 +2,29 @@ import { css } from "@emotion/react";
 
 export const Positioner = css`
     width: 100vw;
-    height: 100vh;
-    padding: 75px 10px 10px 10px;
+    height: 100%;
+    min-height: 100vh;
+    padding: 75px 10px 15px 10px;
     letter-spacing: 0.5px;
-    overflow: hidden;
 
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     flex-direction: row;
 `
 
 export const MainArea = css`
     width: 1300px;
-    height: 850px;
-    border-radius: 5px;
-
     display: flex;
     flex-direction: row;
     position: relative;
 `
 
 export const InfoArea = css`
-    width: 650px;
+    width: 630px;
     height: 100%;
-    padding: 30px 15px 30px 15px;
+    padding: 30px 7.5px 15px 7.5px;
+    border-radius: 5px;
     background-color: var(--bg-color);
     backdrop-filter: blur(7.5px);
 
@@ -86,18 +84,18 @@ export const ChangeTapContainer = css`
 `
 
 export const StdentArea = css`
-    width: calc(100% - 650px);
-    height: 100%;
-    padding: 60px 60px 60px 60px;
+    width: calc(100% - 670px);
+    height: 850px;
+    padding: 0px 60px 0px 60px;
     display: flex;
     position: relative;
     z-index: 1;
 `
 export const StandingImg = css`
-    height: 100%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
+    height: 85vh;
+    position: fixed;
+    top: 55%;
+    left: 65%;
     transform: translate(-50%, -50%);
 `
 
@@ -229,9 +227,10 @@ export const Block = css`
     border-bottom: 70px solid var(--bg-color);
     border-left: 15px solid transparent;
     height: 0;
-    width: 40px;
+    width: 35px;
     border-radius: 5px;
 `
+
 export const SecondLine = css`
 `
 export const EquipmentList = css`
@@ -276,7 +275,7 @@ export const TierBtnContainer = css`
     }
 `
 export const BaseEquipment = css`
-    width: 250px;
+    width: 255px;
     height: 60px;
     padding: 0px 8px 0px 8px;
     border-left: 2px solid;
@@ -328,7 +327,7 @@ export const LevelScaleContainer = css`
     width: calc(100% - 200px);
     height: 25px;
     padding: 0px 0px 0px 10px;
-    margin: 5px 0px 5px 0px;
+    margin: 8.5px 0px 8.5px 0px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -346,8 +345,8 @@ export const LevelScaleContainer = css`
 `
 export const StatContainer = css`
     width: 100%;
-    height: 450px;
-    padding: 30px;
+    height: 380px;
+    padding: 10px;
     border-radius: 5px;
     background-color: var(--bg-color);
 
@@ -356,18 +355,19 @@ export const StatContainer = css`
 `
 export const StatIcon = css`
     width: 50%;
-    height: 35px;
+    height: 30px;
+    margin: 7.5px 0px 7.5px 0px;
     display: flex;
     align-items: center;
     div{
-        width: 35px;
-        height: 35px;
+        width: 30px;
+        height: 30px;
         border-radius: 35px;
         background-color: var(--nav-select-color);
         margin: 0px 10px 0px 0px;
         img{
-            height: 35px;
-            padding: 0px 2.275px 0px 2.275px;
+            height: 30px;
+            padding: 0px 2px 0px 2px;
             margin: 0px 5px 0px 0px;
             border-radius: 35px;
             filter: var(--icon-color);
@@ -450,8 +450,17 @@ export const SkillLevelScaleContainer = css`
 export const HeadProfileContainer = css`
     display: flex;
     margin: 25px 0px 15px 0px;
-    img{
-        border-radius: 10px;
+`
+export const ProfileImgContainer = css`
+    width: 100px;
+    overflow: hidden;
+    border-radius: 10px;
+    position: relative;
+    img{    
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 `
 export const CommonInfo = css`
@@ -476,7 +485,7 @@ export const SubContainer = css`
     justify-content: space-between;
 `
 export const SubInfo = css`
-    width: 250px;
+    width: 100%;
     height: 250px;
     padding: 15px;
     border-radius: 10px;
@@ -485,15 +494,43 @@ export const SubInfo = css`
     flex-direction: column;
     justify-content: space-between;
 `
+export const SubInfoText = css`
+    display: flex;
+    align-items: center;
+    p{
+        width: 50px;
+        padding-left: 10px;
+    }
+    span{
+        width: 220px;
+    }
+`
 export const WhiteLine = css`
     width: 100%;
     height: 1px;
     background-color: var(--base-color);
 `
 export const FavorItemContainer = css`
-    width: calc(100% - 260px);
-    height: 250px;
-    padding: 15px;
+    width: 100%;
+    padding: 15px 0px 15px 0px;
     border-radius: 10px;
     background-color: var(--bg-color);
+`
+export const FavorItemList = css`
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    div{
+        position: relative;
+    }
+`
+export const FavorItem = css`
+    height: 60px;
+`
+export const ItemInteraction = css`
+    height: 25px;
+    position: absolute;
+    top: 80%;
+    left: 80%;
+    transform: translate(-50%, -50%);
 `

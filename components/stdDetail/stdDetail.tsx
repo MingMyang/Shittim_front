@@ -4,6 +4,7 @@ import { css } from '@emotion/react';
 import { useState, useEffect } from "react";
 import localization from '@/asset/json/localization.json';
 import equipment from '@/asset/json/equipment.json';
+import items from '@/asset/json/items.json';
 import parse from 'html-react-parser';
 
 function stdDetail(props: any) {
@@ -501,9 +502,36 @@ function stdDetail(props: any) {
                 levelToAssign = newSkill.Parameters[k][exLevel];
             }
             newSkill.Desc = newSkill.Desc.replace('<?' + l + '>', levelToAssign);
+            newSkill.Desc = newSkill.Desc.replace(/\n/g, "<br>");
         }
         newSkills.push(newSkill); // 수정된 스킬 객체를 배열에 추가
     }
+
+    const ProfileIntroduction = currentStudent?.ProfileIntroduction.replace(/\n/g, "<br>");
+
+    //선호 선물 불러오기
+    const FavorItem: any[] = [];
+    const FavorTag = [...(currentStudent?.FavorItemTags || []), ...(currentStudent?.FavorItemUniqueTags || [])];
+    function filterGiftsByMatchingTags(data: any, FavorTag: any) {
+        return data.filter((item: any) => {
+            // 각 객체의 태그와 FavorTag 배열을 비교하여 일치하는 태그 수 계산
+            const matchingTags = item.Tags.filter((tag: any) => FavorTag.includes(tag));
+            return matchingTags.length;
+        });
+    };
+    const matchingGifts = filterGiftsByMatchingTags(items, FavorTag);
+    //선호 등급별로 분류
+    let groupedGifts: any = [];
+    matchingGifts.forEach((item: any) => {
+        const matchingTags = item.Tags.filter((tag: any) => FavorTag.includes(tag));
+        const matchingTagCount = matchingTags.length;
+
+        if (!groupedGifts[matchingTagCount]) {
+            groupedGifts[matchingTagCount] = [];
+        }
+
+        groupedGifts[matchingTagCount].push(item);
+    });
 
     const renderContent = () => {
         switch (selectedTap) {
@@ -613,7 +641,7 @@ function stdDetail(props: any) {
                             </div>
                             <div css={S.SkillDescContaioner}>
                                 <h3>EX 스킬 | {parse(currentSkills[0]?.Name)}</h3>
-                                <p css={S.SkillDesc}>{newSkills[0]?.Desc}</p>
+                                <p css={S.SkillDesc}>{parse(newSkills[0]?.Desc)}</p>
                                 <div css={S.SkillLevelScaleContainer}>
                                     <input type="range" min="1" max="5" value={exValue} onChange={exLevelChange} />
                                     <p> Lv. {exValue}</p>
@@ -623,8 +651,8 @@ function stdDetail(props: any) {
                         <div css={S.SkillContainer}>
                             <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[1]?.Icon + '.png'} /></div>
                             <div css={S.SkillDescContaioner}>
-                                <h3>노말 스킬 | {parse(currentSkills[1]?.Name)}</h3>
-                                <p css={S.SkillDesc}>{newSkills[1]?.Desc}</p>
+                                <h3>기본 스킬 | {parse(currentSkills[1]?.Name)}</h3>
+                                <p css={S.SkillDesc}>{parse(newSkills[1]?.Desc)}</p>
                                 <div css={S.SkillLevelScaleContainer}>
                                     <input type="range" min="1" max="10" value={nomalValue} onChange={nomalLevelChange} />
                                     <p> Lv. {nomalValue}</p>
@@ -635,7 +663,7 @@ function stdDetail(props: any) {
                             <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[2]?.Icon + '.png'} /></div>
                             <div css={S.SkillDescContaioner}>
                                 <h3>강화 스킬 | {parse(currentSkills[2]?.Name)}</h3>
-                                <p css={S.SkillDesc}>{newSkills[2]?.Desc}</p>
+                                <p css={S.SkillDesc}>{parse(newSkills[2]?.Desc)}</p>
                                 <div css={S.SkillLevelScaleContainer}>
                                     <input type="range" min="1" max="10" value={passiveValue} onChange={passiveLevelChange} />
                                     <p> Lv. {passiveValue}</p>
@@ -646,7 +674,7 @@ function stdDetail(props: any) {
                             <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[3]?.Icon + '.png'} /></div>
                             <div css={S.SkillDescContaioner}>
                                 <h3>서브 스킬 | {parse(currentSkills[3]?.Name)}</h3>
-                                <p css={S.SkillDesc}>{newSkills[3]?.Desc}</p>
+                                <p css={S.SkillDesc}>{parse(newSkills[3]?.Desc)}</p>
                                 <div css={S.SkillLevelScaleContainer}>
                                     <input type="range" min="1" max="10" value={subValue} onChange={subLevelChange} />
                                     <p> Lv. {subValue}</p>
@@ -661,7 +689,7 @@ function stdDetail(props: any) {
                 return (
                     <div css={S.DetailInfo}>
                         <div css={S.HeadProfileContainer}>
-                            <img src={'/images/student/icon/' + currentStudent.CollectionTexture + '.png'} />
+                            <div css={S.ProfileImgContainer}><img alt='' src={'/images/student/icon/' + currentStudent.CollectionTexture + '.png'} /></div>
                             <div css={S.CommonInfo}>
                                 <div>
                                     <div>{translate("SchoolLong", currentStudent?.School)} {currentStudent.SchoolYear}</div>
@@ -671,24 +699,46 @@ function stdDetail(props: any) {
                                 <div css={S.GetNewCharacterText}>" {currentStudent.CharacterSSRNew} "</div>
                             </div>
                         </div>
-                        <div css={S.ProfileIntroduction}>{parse(currentStudent.ProfileIntroduction)}</div>
+                        <div css={S.ProfileIntroduction}>{parse(ProfileIntroduction)}</div>
                         <div css={S.SubContainer}>
                             <div css={S.SubInfo}>
-                                <div>나이 &nbsp; &nbsp;{currentStudent.CharacterAge}</div>
+                                <div css={S.SubInfoText}><p>나이</p> <span>{currentStudent.CharacterAge}</span></div>
                                 <div css={S.WhiteLine} />
-                                <div>생일 &nbsp; &nbsp;{currentStudent.Birthday}</div>
+                                <div css={S.SubInfoText}><p>생일</p> <span>{currentStudent.Birthday}</span></div>
                                 <div css={S.WhiteLine} />
-                                <div>신장 &nbsp; &nbsp;{currentStudent.CharHeightMetric}</div>
+                                <div css={S.SubInfoText}><p>신장</p> <span>{currentStudent.CharHeightMetric}</span></div>
                                 <div css={S.WhiteLine} />
-                                <div>취미 &nbsp; &nbsp;{currentStudent.Hobby}</div>
+                                <div css={S.SubInfoText}><p>취미</p> <span>{currentStudent.Hobby}</span></div>
                                 <div css={S.WhiteLine} />
-                                <div>원화 &nbsp; &nbsp;{currentStudent.Designer}</div>
+                                <div css={S.SubInfoText}><p>원화</p> <span>{currentStudent.Designer}</span></div>
                                 <div css={S.WhiteLine} />
-                                <div>그림 &nbsp; &nbsp;{currentStudent.Illustrator}</div>
+                                <div css={S.SubInfoText}><p>그림</p> <span>{currentStudent.Illustrator}</span></div>
                                 <div css={S.WhiteLine} />
-                                <div>CV. &nbsp; &nbsp;{currentStudent.CharacterVoice}</div>
+                                <div css={S.SubInfoText}><p>CV.</p> <span>{currentStudent.CharacterVoice}</span></div>
                             </div>
-                            <div css={S.FavorItemContainer}>
+                        </div>
+                        <h2>선호 선물</h2>
+                        <br />
+                        <div css={S.FavorItemContainer}>
+                            <div css={S.FavorItemList}>
+                                {groupedGifts[3]?.map((index: any) => (
+                                    <div>
+                                        <img css={S.FavorItem} key={index} alt='' src={'/images/items/' + index.Icon + '.png'} />
+                                        <img css={S.ItemInteraction} alt='' src={'/images/ui/Cafe_Interaction_Gift_04.png'} />
+                                    </div>
+                                ))}
+                                {groupedGifts[2]?.map((index: any) => (
+                                    <div>
+                                        <img css={S.FavorItem} key={index} alt='' src={'/images/items/' + index.Icon + '.png'} />
+                                        <img css={S.ItemInteraction} alt='' src={'/images/ui/Cafe_Interaction_Gift_03.png'} />
+                                    </div>
+                                ))}
+                                {groupedGifts[1]?.map((index: any) => (
+                                    <div>
+                                        <img css={S.FavorItem} key={index} alt='' src={'/images/items/' + index.Icon + '.png'} />
+                                        <img css={S.ItemInteraction} alt='' src={'/images/ui/Cafe_Interaction_Gift_02.png'} />
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>

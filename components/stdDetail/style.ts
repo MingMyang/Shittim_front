@@ -398,7 +398,8 @@ export const ExIconContainer = css`
     align-items: center;
 `
 export const ExCost = css`
-    width: 85px;
+    width: 75px;
+    font-size: 14px;
     text-align: center;
     letter-spacing: 1.5px;
     padding: 5px;
@@ -407,15 +408,15 @@ export const ExCost = css`
     background-color: var(--grid-box-color);
 `
 export const SkillIcon = css`
-    width: 75px;
-    height: 75px;
+    width: 65px;
+    height: 65px;
     margin: 0px 12.5px 0px 12.5px;
     border-radius: 75px;
     display: flex;
     justify-content: center;
     align-items: center;
     img{
-        height: 75px;
+        height: 65px;
     }
 `
 export const SkillDesc = css`

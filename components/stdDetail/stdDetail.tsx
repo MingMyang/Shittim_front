@@ -49,25 +49,21 @@ function stdDetail(props: any) {
         }
         if (storedEx !== null) {
             setExValue(parseInt(storedEx));
-            setExLevel(exValue - 1);
         } else {
             localStorage.setItem("ExLevel", "1");
         }
         if (storedNomal !== null) {
             setNomalValue(parseInt(storedNomal));
-            setNomalLevel(nomalValue - 1);
         } else {
             localStorage.setItem("NomalLevel", "1");
         }
         if (storedPassive !== null) {
             setPassiveValue(parseInt(storedPassive));
-            setPassiveLevel(passiveValue - 1);
         } else {
             localStorage.setItem("PassiveLevel", "1");
         }
         if (storedSub !== null) {
             setSubValue(parseInt(storedSub));
-            setSubLevel(subValue - 1);
         } else {
             localStorage.setItem("SubLevel", "1");
         }
@@ -414,29 +410,21 @@ function stdDetail(props: any) {
     const [nomalValue, setNomalValue] = useState(1);
     const [passiveValue, setPassiveValue] = useState(1);
     const [subValue, setSubValue] = useState(1);
-    //내부에서 사용하는 값
-    const [exLevel, setExLevel] = useState(exValue - 1);
+    //내부 사용값
     const exLevelChange = (event: any) => {
         setExValue(event.target.value);
-        setExLevel(exValue - 1);
         localStorage.setItem("ExLevel", event.target.value);
     };
-    const [nomalLevel, setNomalLevel] = useState(nomalValue - 1);
     const nomalLevelChange = (event: any) => {
         setNomalValue(event.target.value);
-        setNomalLevel(nomalValue - 1);
         localStorage.setItem("NomalLevel", event.target.value);
     };
-    const [passiveLevel, setPassiveLevel] = useState(passiveValue - 1);
     const passiveLevelChange = (event: any) => {
         setPassiveValue(event.target.value);
-        setPassiveLevel(passiveValue - 1);
         localStorage.setItem("PassiveLevel", event.target.value);
     };
-    const [subLevel, setSubLevel] = useState(subValue - 1);
     const subLevelChange = (event: any) => {
         setSubValue(event.target.value);
-        setSubLevel(subValue - 1);
         localStorage.setItem("SubLevel", event.target.value);
     };
 
@@ -491,15 +479,15 @@ function stdDetail(props: any) {
             let l = k + 1;
             let levelToAssign;
             if (i === 0) {
-                levelToAssign = newSkill.Parameters[k][exLevel];
+                levelToAssign = newSkill.Parameters[k][(exValue - 1)];
             } else if (i === 1) {
-                levelToAssign = newSkill.Parameters[k][nomalLevel];
+                levelToAssign = newSkill.Parameters[k][(nomalValue - 1)];
             } else if (i === 2) {
-                levelToAssign = newSkill.Parameters[k][passiveLevel];
+                levelToAssign = newSkill.Parameters[k][(passiveValue - 1)];
             } else if (i === 3) {
-                levelToAssign = newSkill.Parameters[k][subLevel];
+                levelToAssign = newSkill.Parameters[k][(subValue - 1)];
             } else {
-                levelToAssign = newSkill.Parameters[k][exLevel];
+                levelToAssign = newSkill.Parameters[k][(exValue - 1)];
             }
             newSkill.Desc = newSkill.Desc.replace('<?' + l + '>', levelToAssign);
             newSkill.Desc = newSkill.Desc.replace(/\n/g, "<br>");
@@ -637,11 +625,11 @@ function stdDetail(props: any) {
                         <div css={S.SkillContainer}>
                             <div css={S.ExIconContainer}>
                                 <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[0]?.Icon + '.png'} /></div>
-                                <div css={S.ExCost}>COST: {currentSkills[0]?.Cost[exLevel]}</div>
+                                <div css={S.ExCost}>COST: {currentSkills[0]?.Cost[(exValue - 1)]}</div>
                             </div>
                             <div css={S.SkillDescContaioner}>
                                 <h3>EX 스킬 | {parse(currentSkills[0]?.Name)}</h3>
-                                <p css={S.SkillDesc}>{parse(newSkills[0]?.Desc)}</p>
+                                <p css={S.SkillDesc}>{parse(String(newSkills[0]?.Desc))}</p>
                                 <div css={S.SkillLevelScaleContainer}>
                                     <input type="range" min="1" max="5" value={exValue} onChange={exLevelChange} />
                                     <p> Lv. {exValue}</p>
@@ -652,7 +640,7 @@ function stdDetail(props: any) {
                             <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[1]?.Icon + '.png'} /></div>
                             <div css={S.SkillDescContaioner}>
                                 <h3>기본 스킬 | {parse(currentSkills[1]?.Name)}</h3>
-                                <p css={S.SkillDesc}>{parse(newSkills[1]?.Desc)}</p>
+                                <p css={S.SkillDesc}>{parse(String(newSkills[1]?.Desc))}</p>
                                 <div css={S.SkillLevelScaleContainer}>
                                     <input type="range" min="1" max="10" value={nomalValue} onChange={nomalLevelChange} />
                                     <p> Lv. {nomalValue}</p>
@@ -663,7 +651,7 @@ function stdDetail(props: any) {
                             <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[2]?.Icon + '.png'} /></div>
                             <div css={S.SkillDescContaioner}>
                                 <h3>강화 스킬 | {parse(currentSkills[2]?.Name)}</h3>
-                                <p css={S.SkillDesc}>{parse(newSkills[2]?.Desc)}</p>
+                                <p css={S.SkillDesc}>{parse(String(newSkills[2]?.Desc))}</p>
                                 <div css={S.SkillLevelScaleContainer}>
                                     <input type="range" min="1" max="10" value={passiveValue} onChange={passiveLevelChange} />
                                     <p> Lv. {passiveValue}</p>
@@ -674,7 +662,7 @@ function stdDetail(props: any) {
                             <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[3]?.Icon + '.png'} /></div>
                             <div css={S.SkillDescContaioner}>
                                 <h3>서브 스킬 | {parse(currentSkills[3]?.Name)}</h3>
-                                <p css={S.SkillDesc}>{parse(newSkills[3]?.Desc)}</p>
+                                <p css={S.SkillDesc}>{parse(String(newSkills[3]?.Desc))}</p>
                                 <div css={S.SkillLevelScaleContainer}>
                                     <input type="range" min="1" max="10" value={subValue} onChange={subLevelChange} />
                                     <p> Lv. {subValue}</p>

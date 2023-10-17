@@ -397,7 +397,7 @@ function stdDetail(props: any) {
     const Indoor = terrianCalc(currentStudent?.IndoorBattleAdaptation);
 
 
-    //탭 변경사항 감지
+    //탭 변경 (+ 페이드 인&아웃 애니메이션)
     const [selectedTap, setSelectedTap] = useState('summary');
     const TapHide = css`
         ${S.DetailInfo} 
@@ -410,8 +410,10 @@ function stdDetail(props: any) {
         transition: linear 0.5s;
     `
     const handleTapClick = (tap: any) => {
-        setFade(TapHide);
-        setTimeout(()=> {setSelectedTap(tap)}, 100)
+        if(tap !== selectedTap){
+            setFade(TapHide);
+            setTimeout(()=> {setSelectedTap(tap)}, 100)
+        }
     };
     let [fade, setFade] = useState(TapLook);
     useEffect(() => {

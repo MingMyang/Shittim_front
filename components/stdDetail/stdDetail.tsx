@@ -399,9 +399,24 @@ function stdDetail(props: any) {
 
     //탭 변경사항 감지
     const [selectedTap, setSelectedTap] = useState('summary');
+    const TapHide = css`
+        ${S.DetailInfo} 
+        transition: linear 0.1s;
+        opacity: 0;
+    `
+    const TapLook = css`
+        ${S.DetailInfo} 
+        opacity: 1;
+        transition: linear 0.5s;
+    `
     const handleTapClick = (tap: any) => {
-        setSelectedTap(tap);
+        setFade(TapHide);
+        setTimeout(()=> {setSelectedTap(tap)}, 100)
     };
+    let [fade, setFade] = useState(TapLook);
+    useEffect(() => {
+        setFade(TapLook)
+    },[selectedTap])
 
     //스킬레벨 조정
     let currentSkills: any[] = [];
@@ -456,10 +471,10 @@ function stdDetail(props: any) {
         currentSkills[4] = currentStudent?.Skills[3]; /* 강화+ */
     }
 
+    //스킬 계수 삽입
     const codeType = [/<b:(.*?)>/g, /<d:(.*?)>/g, /<c:(.*?)>/g, /<s:(.*?)>/g];
     const buffType = ["Buff_", "Debuff_", "CC_", "Special_"];
     const newSkills: any[] = []; // 새로운 스킬 객체를 저장할 배열
-
     for (let i = 0; i < currentSkills.length; i++) {
         const newSkill = { ...currentSkills[i] }; // 스킬 객체를 복사
         newSkill.Desc = currentSkills[i]?.Desc; // Desc 속성을 복사
@@ -495,6 +510,7 @@ function stdDetail(props: any) {
         newSkills.push(newSkill); // 수정된 스킬 객체를 배열에 추가
     }
 
+    //JSON 데이터에 포함된 HTML 태그 활성화
     const ProfileIntroduction = currentStudent?.ProfileIntroduction.replace(/\n/g, "<br>");
 
     //선호 선물 불러오기
@@ -525,7 +541,7 @@ function stdDetail(props: any) {
         switch (selectedTap) {
             case 'summary':
                 return (
-                    <div css={S.DetailInfo}>
+                    <div css={fade}>
                         {/*첫번째 줄(타입, 지형상성, 부가적 요소 적용 여부)*/}
                         <div css={S.FirstLine}>
                             <div css={S.TypeInfo}>
@@ -601,15 +617,15 @@ function stdDetail(props: any) {
                             <div css={S.StatContainer}>
                                 <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_MaxHP.png'} /></div><p>최대체력: {totalHP} </p></div>
                                 <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_AttackPower.png'} /></div><p>공격력: {totalAtk} </p></div>
-                                <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_DefensePower.png'} /></div><p>방어력: {totalDef} <br /> ( {(100 - ((1 / ((totalDef + 1666) / 1666)) * 100)).toFixed(2)}%의 피해 감소 )</p></div>
+                                <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_DefensePower.png'} /></div><p>방어력: {totalDef} <br /> ( 피해 경감률 {(100 - ((1 / ((totalDef + 1666) / 1666)) * 100)).toFixed(2)}% )</p></div>
                                 <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_HealPower.png'} /></div><p>치유력: {totalHeal}</p></div>
                                 <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_AccuracyPoint.png'} /></div><p>명중 수치: {totalAccuracy}</p></div>
                                 <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_DodgePoint.png'} /></div><p>회피 수치: {totalDodge}</p></div>
-                                <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_CriticalPoint.png'} /></div><p>회심 수치: {totalCritical} | {((totalCritical / (totalCritical + 666.666)) * 100).toFixed(2)}%</p></div>
+                                <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_CriticalPoint.png'} /></div><p>회심 수치: {totalCritical} <br /> (회심 확률 {((totalCritical / (totalCritical + 666.666)) * 100).toFixed(2)}% )</p></div>
                                 <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_CriticalDamageRate.png'} /></div><p>회심 피해: {totalCriticalDamage / 100}%</p></div>
                                 <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_CriticalChanceResistPoint.png'} /></div><p>회심 저항률: 100</p></div>
                                 <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_CriticalDamageResistRate.png'} /></div><p>회심 피해 저항률: 50%</p></div>
-                                <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_StabilityPoint.png'} /></div><p>안정치: {totalStability} <br /> ( 최소 {(((totalStability / (totalStability + 1000)) + 0.2) * 100).toFixed(2)}%의 피해 )</p></div>
+                                <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_StabilityPoint.png'} /></div><p>안정치: {totalStability} <br /> ( 최소 피해량 {(((totalStability / (totalStability + 1000)) + 0.2) * 100).toFixed(2)}% )</p></div>
                                 <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_Range.png'} /></div><p>사거리: {currentStudent?.Range}</p></div>
                                 <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_OppressionPower.png'} /></div><p>CC 강화력: 100</p></div>
                                 <div css={S.StatIcon}><div><img alt='' src={'/images/staticon/Stat_OppressionResist.png'} /></div><p>CC 저항력: 100</p></div>
@@ -621,7 +637,7 @@ function stdDetail(props: any) {
                 );
             case 'skills':
                 return (
-                    <div css={S.DetailInfo}>
+                    <div css={fade}>
                         <div css={S.SkillContainer}>
                             <div css={S.ExIconContainer}>
                                 <div css={SkillIcon}><img alt='' src={'/images/skill/' + currentSkills[0]?.Icon + '.png'} /></div>
@@ -672,10 +688,10 @@ function stdDetail(props: any) {
                     </div>
                 );
             case 'items':
-                return <div css={S.DetailInfo}>Comming Soon!</div>;
+                return <div css={fade}>Comming Soon!</div>;
             case 'profile':
                 return (
-                    <div css={S.DetailInfo}>
+                    <div css={fade}>
                         <div css={S.HeadProfileContainer}>
                             <div css={S.ProfileImgContainer}><img alt='' src={'/images/student/icon/' + currentStudent.CollectionTexture + '.png'} /></div>
                             <div css={S.CommonInfo}>

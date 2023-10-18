@@ -2,6 +2,7 @@
 import * as S from "./style"
 import { css } from '@emotion/react';
 import { useState, useEffect } from "react";
+import { Tooltip as ReactTooltip } from 'react-tooltip'
 import localization from '@/asset/json/localization.json';
 import equipment from '@/asset/json/equipment.json';
 import items from '@/asset/json/items.json';
@@ -531,11 +532,11 @@ function stdDetail(props: any) {
     matchingGifts.forEach((item: any) => {
         const matchingTags = item.Tags.filter((tag: any) => FavorTag.includes(tag));
         const matchingTagCount = matchingTags.length;
-
         if (!groupedGifts[matchingTagCount]) {
             groupedGifts[matchingTagCount] = [];
+        } else{
+            /* item.Desc = item?.Desc.replace(/\n/g, "<br>"); */
         }
-
         groupedGifts[matchingTagCount].push(item);
     });
 
@@ -728,21 +729,24 @@ function stdDetail(props: any) {
                         <div css={S.FavorItemContainer}>
                             <div css={S.FavorItemList}>
                                 {groupedGifts[3]?.map((index: any) => (
-                                    <div>
+                                    <div data-tooltip-id={index?.Id} data-tooltip-content={parse(String(index.Desc))}>
                                         <img css={S.FavorItem} key={index} alt='' src={'/images/items/' + index.Icon + '.png'} />
                                         <img css={S.ItemInteraction} alt='' src={'/images/ui/Cafe_Interaction_Gift_04.png'} />
+                                        <ReactTooltip style={{ position: "fixed", width: "250px" }} id={index?.Id} place="top" />
                                     </div>
                                 ))}
                                 {groupedGifts[2]?.map((index: any) => (
-                                    <div>
+                                    <div data-tooltip-id={index?.Id} data-tooltip-content={parse(String(index.Desc))}>
                                         <img css={S.FavorItem} key={index} alt='' src={'/images/items/' + index.Icon + '.png'} />
                                         <img css={S.ItemInteraction} alt='' src={'/images/ui/Cafe_Interaction_Gift_03.png'} />
+                                        <ReactTooltip style={{ position: "fixed", width: "250px" }} id={index?.Id} place="top" />
                                     </div>
                                 ))}
                                 {groupedGifts[1]?.map((index: any) => (
-                                    <div>
+                                    <div data-tooltip-id={index?.Id} data-tooltip-content={parse(String(index.Desc))}>
                                         <img css={S.FavorItem} key={index} alt='' src={'/images/items/' + index.Icon + '.png'} />
                                         <img css={S.ItemInteraction} alt='' src={'/images/ui/Cafe_Interaction_Gift_02.png'} />
+                                        <ReactTooltip style={{ position: "fixed", width: "250px", display:"flex", justifyContent: "center", flexDirection: "column" }} id={index?.Id} />
                                     </div>
                                 ))}
                             </div>

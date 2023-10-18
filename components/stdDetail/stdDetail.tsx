@@ -729,21 +729,21 @@ function stdDetail(props: any) {
                         <div css={S.FavorItemContainer}>
                             <div css={S.FavorItemList}>
                                 {groupedGifts[3]?.map((index: any) => (
-                                    <div data-tooltip-id={index?.Id} data-tooltip-content={parse(String(index.Desc))}>
+                                    <div>
                                         <img css={S.FavorItem} key={index} alt='' src={'/images/items/' + index.Icon + '.png'} />
                                         <img css={S.ItemInteraction} alt='' src={'/images/ui/Cafe_Interaction_Gift_04.png'} />
                                         <ReactTooltip style={{ position: "fixed", width: "250px" }} id={index?.Id} place="top" />
                                     </div>
                                 ))}
                                 {groupedGifts[2]?.map((index: any) => (
-                                    <div data-tooltip-id={index?.Id} data-tooltip-content={parse(String(index.Desc))}>
+                                    <div>
                                         <img css={S.FavorItem} key={index} alt='' src={'/images/items/' + index.Icon + '.png'} />
                                         <img css={S.ItemInteraction} alt='' src={'/images/ui/Cafe_Interaction_Gift_03.png'} />
                                         <ReactTooltip style={{ position: "fixed", width: "250px" }} id={index?.Id} place="top" />
                                     </div>
                                 ))}
                                 {groupedGifts[1]?.map((index: any) => (
-                                    <div data-tooltip-id={index?.Id} data-tooltip-content={parse(String(index.Desc))}>
+                                    <div>
                                         <img css={S.FavorItem} key={index} alt='' src={'/images/items/' + index.Icon + '.png'} />
                                         <img css={S.ItemInteraction} alt='' src={'/images/ui/Cafe_Interaction_Gift_02.png'} />
                                         <ReactTooltip style={{ position: "fixed", width: "250px", display:"flex", justifyContent: "center", flexDirection: "column" }} id={index?.Id} />

@@ -487,7 +487,7 @@ export const SubContainer = css`
 `
 export const SubInfo = css`
     width: 100%;
-    height: 250px;
+    height: auto;
     padding: 15px;
     border-radius: 10px;
     background-color: var(--bg-color);
@@ -495,20 +495,33 @@ export const SubInfo = css`
     flex-direction: column;
     justify-content: space-between;
 `
-export const SubInfoText = css`
+export const SummaryInfo = css`
+    width: 100%;
+    height: 110px;   
     display: flex;
-    align-items: center;
-    p{
-        width: 50px;
-        padding-left: 10px;
-    }
-    span{
-        width: 220px;
-    }
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
 `
+export const SummaryInfoText = css`
+    width: 48%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 17px;
+`
+export const SummaryInfoText2 = css`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 17px;
+`
+
 export const WhiteLine = css`
     width: 100%;
     height: 1px;
+    margin: 10px 0px 10px 0px;
     background-color: var(--base-color);
 `
 export const FavorItemContainer = css`

@@ -411,15 +411,15 @@ function stdDetail(props: any) {
         transition: linear 0.5s;
     `
     const handleTapClick = (tap: any) => {
-        if(tap !== selectedTap){
+        if (tap !== selectedTap) {
             setFade(TapHide);
-            setTimeout(()=> {setSelectedTap(tap)}, 100)
+            setTimeout(() => { setSelectedTap(tap) }, 100)
         }
     };
     let [fade, setFade] = useState(TapLook);
     useEffect(() => {
         setFade(TapLook)
-    },[selectedTap])
+    }, [selectedTap])
 
     //스킬레벨 조정
     let currentSkills: any[] = [];
@@ -534,7 +534,7 @@ function stdDetail(props: any) {
         const matchingTagCount = matchingTags.length;
         if (!groupedGifts[matchingTagCount]) {
             groupedGifts[matchingTagCount] = [];
-        } else{
+        } else {
             /* item.Desc = item?.Desc.replace(/\n/g, "<br>"); */
         }
         groupedGifts[matchingTagCount].push(item);
@@ -706,24 +706,25 @@ function stdDetail(props: any) {
                                 <div css={S.GetNewCharacterText}>" {currentStudent.CharacterSSRNew} "</div>
                             </div>
                         </div>
-                        <div css={S.ProfileIntroduction}>{parse(ProfileIntroduction)}</div>
                         <div css={S.SubContainer}>
                             <div css={S.SubInfo}>
-                                <div css={S.SubInfoText}><p>나이</p> <span>{currentStudent.CharacterAge}</span></div>
+                                <div css={S.ProfileIntroduction}>{parse(ProfileIntroduction)}</div>
                                 <div css={S.WhiteLine} />
-                                <div css={S.SubInfoText}><p>생일</p> <span>{currentStudent.Birthday}</span></div>
-                                <div css={S.WhiteLine} />
-                                <div css={S.SubInfoText}><p>신장</p> <span>{currentStudent.CharHeightMetric}</span></div>
-                                <div css={S.WhiteLine} />
-                                <div css={S.SubInfoText}><p>취미</p> <span>{currentStudent.Hobby}</span></div>
-                                <div css={S.WhiteLine} />
-                                <div css={S.SubInfoText}><p>원화</p> <span>{currentStudent.Designer}</span></div>
-                                <div css={S.WhiteLine} />
-                                <div css={S.SubInfoText}><p>그림</p> <span>{currentStudent.Illustrator}</span></div>
-                                <div css={S.WhiteLine} />
-                                <div css={S.SubInfoText}><p>CV.</p> <span>{currentStudent.CharacterVoice}</span></div>
+                                <div css={S.SummaryInfo}>
+                                    <div css={S.SummaryInfoText}><p>나이</p> <span>{currentStudent.CharacterAge}</span></div>
+                                    <div css={S.SummaryInfoText}><p>생일</p> <span>{currentStudent.Birthday}</span></div>
+                                    <div css={S.SummaryInfoText}><p>신장</p> <span>{currentStudent.CharHeightMetric}</span></div>
+                                    <div css={S.SummaryInfoText}><p>원화</p> <span>{currentStudent.Designer}</span></div>
+                                    <div css={S.SummaryInfoText}><p>그림</p> <span>{currentStudent.Illustrator}</span></div>
+                                    <div css={S.SummaryInfoText}><p>CV.</p> <span>{currentStudent.CharacterVoice}</span></div>
+                                    <div css={S.SummaryInfoText2}><p>취미</p> <span>{currentStudent.Hobby}</span></div>
+                                </div>
                             </div>
                         </div>
+                        <h2>인연 랭크 보너스</h2>
+                        <br />
+                        <div css={S.FavorItemContainer}></div>
+                        <br />
                         <h2>선호 선물</h2>
                         <br />
                         <div css={S.FavorItemContainer}>
@@ -746,10 +747,18 @@ function stdDetail(props: any) {
                                     <div>
                                         <img css={S.FavorItem} key={index} alt='' src={'/images/items/' + index.Icon + '.png'} />
                                         <img css={S.ItemInteraction} alt='' src={'/images/ui/Cafe_Interaction_Gift_02.png'} />
-                                        <ReactTooltip style={{ position: "fixed", width: "250px", display:"flex", justifyContent: "center", flexDirection: "column" }} id={index?.Id} />
+                                        <ReactTooltip style={{ position: "fixed", width: "250px", display: "flex", justifyContent: "center", flexDirection: "column" }} id={index?.Id} />
                                     </div>
                                 ))}
                             </div>
+                        </div>
+                        <br />
+                        <h2>상호작용 가구</h2>
+                        <br />
+                        <div css={S.FavorItemContainer}>
+                            {
+
+                            }
                         </div>
                     </div>
                 );

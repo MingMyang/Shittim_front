@@ -15,7 +15,6 @@ export const MainArea = css`
     width: 100%;
     height: 90%;
     padding: 2.5vh 1.5vw 2.5vh 1.5vw;
-    border-radius: 5px;
     background-color: var(--bg-color);
 
     display: flex;

@@ -378,6 +378,11 @@ export const StatIcon = css`
     }
 `
 
+/////////////////
+//   스킬 탭   //
+/////////////////
+
+//스킬 컨테이너
 export const SkillContainer = css`
     width: 100%;
     padding: 15px 15px 15px 0px;
@@ -385,27 +390,12 @@ export const SkillContainer = css`
     background-color: var(--bg-color);
     display: flex;
 `
-export const SkillDescContaioner = css`
-    width: 100%;
-    h3{
-        margin-bottom: 7.5px;
-        font-size: 20px;
-    }
-`
-export const ExIconContainer = css`
+//컨테이너 좌측 (스킬 아이콘, 재료 리스트 토글)
+export const SkillIconContainer = css`
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-`
-export const ExCost = css`
-    width: 75px;
-    font-size: 14px;
-    text-align: center;
-    letter-spacing: 1.5px;
-    padding: 5px;
-    margin-top: 10px;
-    border-radius: 100px;
-    background-color: var(--grid-box-color);
 `
 export const SkillIcon = css`
     width: 65px;
@@ -419,11 +409,42 @@ export const SkillIcon = css`
         height: 65px;
     }
 `
+//컨테이너 우측 (스킬 텍스트)
+export const SkillDescContaioner = css`
+    width: 100%;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    h3{
+        height: 30px;
+        line-height: 30px;
+        font-size: 20px;
+    }
+`
+export const ExTitleLine = css`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+`
+export const ExCost = css`
+    width: 75px;
+    height: 30px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 20px;
+    letter-spacing: 1.5px;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: var(--grid-box-color);
+`
 export const SkillDesc = css`
     width: 100%;
     height: calc(100% - 50px);
     font-size: 18px;
     line-height: 20px;
+    margin: 10px 0px 10px 0px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -431,12 +452,15 @@ export const SkillDesc = css`
 export const SkillLevelScaleContainer = css`
     width: 100%;
     height: 25px;
-    margin: 5px 0px 5px 0px;
+    padding: 7.5px 0px 0px 0px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     input{
         width: calc(100% - 70px);
+        ::-webkit-slider-runnable-track{
+            -webkit-appearance: none;
+        }
     }
     p{
         width: 60px;
@@ -448,6 +472,11 @@ export const SkillLevelScaleContainer = css`
     }
 `
 
+///////////////////
+//   프로필 탭   //
+///////////////////
+
+//헤드 프로필 구역
 export const HeadProfileContainer = css`
     display: flex;
     margin: 25px 0px 15px 0px;
@@ -477,9 +506,7 @@ export const InfoName = css`
 export const GetNewCharacterText = css`
     font-size: 17px;
 `
-export const ProfileIntroduction = css`
-    line-height: 20px;
-`
+//프로필 정보 구역
 export const SubContainer = css`
     margin: 15px 0px 15px 0px;
     display: flex;
@@ -495,7 +522,17 @@ export const SubInfo = css`
     flex-direction: column;
     justify-content: space-between;
 `
-export const SummaryInfo = css`
+//프로필 주요 정보 (소개문, 신상정보)
+export const ProfileIntroduction = css`
+    line-height: 20px;
+`
+export const WhiteLine = css`
+    width: 100%;
+    height: 1px;
+    margin: 10px 0px 10px 0px;
+    background-color: var(--base-color);
+`
+export const ProfileInfo = css`
     width: 100%;
     height: 110px;   
     display: flex;
@@ -503,34 +540,28 @@ export const SummaryInfo = css`
     flex-wrap: wrap;
     justify-content: space-between;
 `
-export const SummaryInfoText = css`
+export const ProfileInfoText = css`
     width: 48%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 17px;
 `
-export const SummaryInfoText2 = css`
+export const ProfileInfoText2 = css`
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 17px;
 `
-
-export const WhiteLine = css`
-    width: 100%;
-    height: 1px;
-    margin: 10px 0px 10px 0px;
-    background-color: var(--base-color);
-`
-export const FavorItemContainer = css`
+//프로필 추가 정보 (인연랭크, 선물, 가구)
+export const ProfileExInfoContainer = css`
     width: 100%;
     padding: 15px 0px 15px 0px;
     border-radius: 10px;
     background-color: var(--bg-color);
 `
-export const FavorItemList = css`
+export const ProfileExInfoList = css`
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
